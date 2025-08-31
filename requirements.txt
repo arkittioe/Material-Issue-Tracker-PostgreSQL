@@ -1,0 +1,23 @@
+# For the main application GUI
+PyQt6
+
+
+SQLAlchemy
+pandas
+numpy
+psycopg2-binary
+
+Flask
+Flask-Cors
+dash
+dash-bootstrap-components
+requests
+gunicorn
+
+matplotlib
+
+watchdog
+
+openpyxl
+
+configparser

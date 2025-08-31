@@ -1,0 +1,158 @@
+
+بعد از نصب postgresدرون psql یا SQL shell برای ساخت کاربر جدید
+-- 1. یک دیتابیس جدید برای برنامه می‌سازیم
+CREATE DATABASE miv_db;
+
+-- 2. یک کاربر جدید با رمز عبور مشخص ایجاد می‌کنیم (رمز را به انتخاب خود تغییر دهید)
+CREATE USER hizadi WITH PASSWORD 'hizadi';
+
+-- 3. تمام دسترسی‌های لازم روی دیتابیس جدید را به کاربر جدید می‌دهیم
+GRANT ALL PRIVILEGES ON DATABASE miv_db TO hizadi;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO hizadi;
+#-------------------------------------------------------
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO hizadi;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO hizadi;
+
+
+#------------------------------------------------------
+.# دستور برای انتقال از sqllite به  postgresql
+
+pgloader sqlite:///data/miv_registry.db postgresql://postgres:hizadi@host.docker.internal:5432/miv_db
+
+# دستور توی پاور شل برای رفتن به فضای pgloader  که ایمیجش رو توی داکر داریم
+
+docker run --rm -it -v /q/PostgreSQL/data:/data dimitri/pgloader /bin/bash
+docker run --rm -it -v G:\Postgres\data:/data dimitri/pgloader:ccl.latest /bin/bash
+
+
+
+#-----------------------------------------------------------
+# برای درست کردن ستون id  مرحله اول توی sql
+
+ALTER TABLE projects      ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+ALTER TABLE miv_records   ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+ALTER TABLE mto_items     ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+ALTER TABLE mto_progress  ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+ALTER TABLE mto_consumption ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+ALTER TABLE activity_logs ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+ALTER TABLE migrated_files ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+ALTER TABLE spools        ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+ALTER TABLE spool_items   ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+ALTER TABLE spool_consumption ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+ALTER TABLE spool_progress ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+ALTER TABLE iso_file_index ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
+
+
+# مرحله دوم
+
+-- 1️⃣ جدول mto_progress
+DO $$
+DECLARE max_id bigint;
+BEGIN
+    SELECT COALESCE(MAX(id),0) INTO max_id FROM mto_progress;
+    EXECUTE format('ALTER SEQUENCE mto_progress_id_seq RESTART WITH %s', max_id + 1);
+END $$;
+
+-- 2️⃣ جدول activity_logs
+DO $$
+DECLARE max_id bigint;
+BEGIN
+    SELECT COALESCE(MAX(id),0) INTO max_id FROM activity_logs;
+    EXECUTE format('ALTER SEQUENCE activity_logs_id_seq RESTART WITH %s', max_id + 1);
+END $$;
+
+-- 3️⃣ جدول miv_records
+DO $$
+DECLARE max_id bigint;
+BEGIN
+    SELECT COALESCE(MAX(id),0) INTO max_id FROM miv_records;
+    EXECUTE format('ALTER SEQUENCE miv_records_id_seq RESTART WITH %s', max_id + 1);
+END $$;
+
+-- 4️⃣ جدول mto_items
+DO $$
+DECLARE max_id bigint;
+BEGIN
+    SELECT COALESCE(MAX(id),0) INTO max_id FROM mto_items;
+    EXECUTE format('ALTER SEQUENCE mto_items_id_seq RESTART WITH %s', max_id + 1);
+END $$;
+
+-- 5️⃣ جدول projects
+DO $$
+DECLARE max_id bigint;
+BEGIN
+    SELECT COALESCE(MAX(id),0) INTO max_id FROM projects;
+    EXECUTE format('ALTER SEQUENCE projects_id_seq RESTART WITH %s', max_id + 1);
+END $$;
+
+-- 6️⃣ جدول migrated_files
+DO $$
+DECLARE max_id bigint;
+BEGIN
+    SELECT COALESCE(MAX(id),0) INTO max_id FROM migrated_files;
+    EXECUTE format('ALTER SEQUENCE migrated_files_id_seq RESTART WITH %s', max_id + 1);
+END $$;
+
+-- 7️⃣ جدول spools
+DO $$
+DECLARE max_id bigint;
+BEGIN
+    SELECT COALESCE(MAX(id),0) INTO max_id FROM spools;
+    EXECUTE format('ALTER SEQUENCE spools_id_seq RESTART WITH %s', max_id + 1);
+END $$;
+
+-- 8️⃣ جدول spool_items
+DO $$
+DECLARE max_id bigint;
+BEGIN
+    SELECT COALESCE(MAX(id),0) INTO max_id FROM spool_items;
+    EXECUTE format('ALTER SEQUENCE spool_items_id_seq RESTART WITH %s', max_id + 1);
+END $$;
+
+-- 9️⃣ جدول spool_consumption
+DO $$
+DECLARE max_id bigint;
+BEGIN
+    SELECT COALESCE(MAX(id),0) INTO max_id FROM spool_consumption;
+    EXECUTE format('ALTER SEQUENCE spool_consumption_id_seq RESTART WITH %s', max_id + 1);
+END $$;
+
+-- 🔹 برای سایر جدول‌هایی که id auto-increment دارند همین الگو را تکرار کنید
+"""
+الف) postgresql.conf
+
+داخلش این خط‌ها رو پیدا/تنظیم کن:
+
+# # فعال‌کردن گوش‌دادن روی همه‌ی اینترفیس‌ها (LAN)
+listen_addresses = '*'
+
+# # می‌تونی پورت رو هم چک کنی (پیش‌فرض 5432)
+port = 5432
+
+# # الگوریتم رمزِ پسورد (ترجیحاً SCRAM)
+password_encryption = scram-sha-256
+
+ب) pg_hba.conf
+
+در انتهای فایل، برای رِنج شبکه‌ات یک قانون اضافه کن (آی‌پی رنج رو مطابق شبکه‌ات عوض کن):
+
+# # اجازه‌ی اتصال همه‌ی یوزرها به همه‌ی دیتابیس‌ها از شبکه‌ی داخلی با احراز هویت رمز
+host    all     all     192.168.0.0/22    scram-sha-256
+
+
+اگر نسخه‌ات قدیمی بود یا مشکل داشتی، موقتاً می‌تونی md5 بذاری، ولی scram-sha-256 امن‌تره.
+
+۱.۳ ری‌استارت سرویس + فایروال
+
+سرویس PostgreSQL رو Restart کن (از Services).
+
+یک قانون فایروال باز کن برای پورت ۵۴۳۲:
+
+# # ایجاد Rule فایروال برای اجازه‌ی ورود به پورت 5432
+New-NetFirewallRule -DisplayName "PostgreSQL 5432" -Direction Inbound -Protocol TCP -LocalPort 5432 -Action Allow
+
+۱.۴ پیشنهاد مهم: آی‌پی ثابت
+
+بهتره برای سرور یک Static IP بدی یا دست‌کم روی روتر DHCP Reservation بسازی تا آی‌پی سرور عوض نشه (مثلاً 192.168.1.10).
+"""

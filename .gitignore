@@ -1,0 +1,25 @@
+# محیط مجازی
+.venv/
+
+# تنظیمات PyCharm
+.idea/
+
+# فایل‌های موقتی پایتون و PyInstaller
+__pycache__/
+build/
+dist/
+*.spec
+*.exe
+
+# فایل‌های CSV بزرگ (در صورت نیاز)
+MTO-*.csv
+MTO_PROGRESS-*.csv
+P*.csv
+*.csv
+Test.py
+*.db
+
+test.py
+FILEDB.py
+backupdb.py
+test_data_manager.py
