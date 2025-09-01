@@ -1,5 +1,5 @@
 # main_app_pyqt.py
-import json
+
 import sys
 import webbrowser
 import subprocess
@@ -12,8 +12,8 @@ from PyQt6.QtWidgets import (
     QCompleter, QInputDialog, QFileDialog, QGroupBox, QProgressBar, QSplashScreen, QCheckBox,
 )
 
-from PyQt6.QtGui import QFont, QColor, QPixmap, QMovie, QStandardItemModel, QStandardItem
-from PyQt6.QtCore import Qt, QStringListModel, pyqtSignal, QObject, QTimer, QSettings, QModelIndex
+from PyQt6.QtGui import QFont, QColor, QPixmap, QMovie
+from PyQt6.QtCore import Qt, QStringListModel, pyqtSignal, QObject, QTimer, QSettings
 
 # برای نمایش نمودار در PyQt6
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -903,13 +903,14 @@ class MTOConsumptionDialog(QDialog):
                 for sel in self.spool_selections[row]:
                     self.spool_consumption_data.append({
                         "spool_item_id": sel["spool_item_id"],
-                        "used_qty": sel["used_qty"] # این مقدار از قبل گرد شده
+                        "used_qty": sel["used_qty"]  # این مقدار از قبل گرد شده
                     })
 
         self.accept()
 
     def get_data(self):
         return self.consumed_data, self.spool_consumption_data
+
 
 # --- پنجره اصلی برنامه ---
 class MainWindow(QMainWindow):
@@ -923,8 +924,7 @@ class MainWindow(QMainWindow):
         self.current_project: Project | None = None
         self.current_user = os.getlogin()
         self.suggestion_data = []
-        self.line_completer_model = QStandardItemModel()  # This line is added
-        self.dashboard_password = "hossein"#DASHBOARD_PASSWORD
+        self.dashboard_password = "hossein"  # DASHBOARD_PASSWORD
 
         # <<< CHANGE: تایمر برای Debouncing اضافه شد
         self.suggestion_timer = QTimer(self)
@@ -986,7 +986,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(central_widget)
         # --- CHANGE: چیدمان اصلی به QVBoxLayout تغییر کرد تا بتوانیم لیبل را در پایین اضافه کنیم ---
         main_layout = QVBoxLayout(central_widget)
-        main_layout.setContentsMargins(10, 10, 10, 5) # تنظیم فاصله از لبه‌ها
+        main_layout.setContentsMargins(10, 10, 10, 5)  # تنظیم فاصله از لبه‌ها
 
         splitter = QSplitter(Qt.Orientation.Horizontal)
 
@@ -1034,7 +1034,6 @@ class MainWindow(QMainWindow):
 
         form_layout = QFormLayout()  # # فرم دوبخشی لیبل/فیلد
         self.entries = {}  # # دیکشنری نگهداری ویجت‌های ورودی
-
         # # --- ردیف ویژه برای Line No با دکمه جستجوی فایل ---
         line_row_container = QWidget()  # # کانتینر برای چینش افقی Line No + دکمه
         line_row = QHBoxLayout(line_row_container)  # # چیدمان افقی
@@ -1058,14 +1057,11 @@ class MainWindow(QMainWindow):
             self.entries[field] = QLineEdit()  # # ایجاد ورودی
             form_layout.addRow(f"{field}:", self.entries[field])  # # افزودن به فرم
 
-        self.line_completer_model = QStandardItemModel()
+        self.line_completer_model = QStringListModel()
 
         # Completer برای فیلد ثبت
         self.register_completer = QCompleter(self.line_completer_model, self)
         self.register_completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
-        # --- ADD THIS LINE ---
-        self.register_completer.setCompletionRole(Qt.ItemDataRole.EditRole)
-        # ---
         self.register_completer.setFilterMode(Qt.MatchFlag.MatchContains)
         self.entries["Line No"].setCompleter(self.register_completer)
         self.register_completer.popup().setMinimumSize(240, 160)
@@ -1083,9 +1079,9 @@ class MainWindow(QMainWindow):
 
         # چیدمان افقی برای عنوان و دکمه به‌روزرسانی
         header_layout = QHBoxLayout()
-        header_layout.addWidget(QLabel("<h3>Line Progress Dashboard</h3>")) # عنوان به انگلیسی تغییر کرد
+        header_layout.addWidget(QLabel("<h3>Line Progress Dashboard</h3>"))  # عنوان به انگلیسی تغییر کرد
         header_layout.addStretch()
-        self.update_dashboard_btn = QPushButton("🔄 Update Chart") # متن دکمه به انگلیسی تغییر کرد
+        self.update_dashboard_btn = QPushButton("🔄 Update Chart")  # متن دکمه به انگلیسی تغییر کرد
         header_layout.addWidget(self.update_dashboard_btn)
         layout.addLayout(header_layout)
 
@@ -1098,7 +1094,7 @@ class MainWindow(QMainWindow):
         self.canvas.draw()
 
         # --- FIX: اصلاح بخش چیدمان دکمه‌های زیر نمودار ---
-        details_button_layout = QHBoxLayout() # این لایه‌بندی افقی برای دکمه‌هاست
+        details_button_layout = QHBoxLayout()  # این لایه‌بندی افقی برای دکمه‌هاست
 
         # دکمه نمایش جزئیات پروژه (داشبورد وب)
         self.details_btn = QPushButton("Show Project Details")
@@ -1126,17 +1122,20 @@ class MainWindow(QMainWindow):
         # Completer برای فیلد جستجو
         self.search_completer = QCompleter(self.line_completer_model, self)
         self.search_completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
-        # --- ADD THIS LINE ---
-        self.search_completer.setCompletionRole(Qt.ItemDataRole.EditRole)
-        # ---
         self.search_completer.setFilterMode(Qt.MatchFlag.MatchContains)
         self.search_entry.setCompleter(self.search_completer)
-
-        self.search_completer.popup().setMinimumSize(240, 160) # تنظیم اندازه پاپ‌آپ
+        self.search_completer.popup().setMinimumSize(240, 160)  # تنظیم اندازه پاپ‌آپ
+        self.search_completer.activated.connect(self.handle_completer_selection)
 
         search_layout.addWidget(self.search_entry)
         search_layout.addWidget(self.search_btn)
         layout.addLayout(search_layout)
+
+    def handle_completer_selection(self, selected_text: str):
+        # این تابع متن انتخاب شده را می‌گیرد
+        # هر چیزی بعد از اولین فاصله را حذف می‌کند
+        cleaned_text = selected_text.split(' ')[0]
+        self.search_entry.setText(cleaned_text)
 
     def create_console(self, parent_widget):
         layout = QVBoxLayout(parent_widget)
@@ -1160,8 +1159,6 @@ class MainWindow(QMainWindow):
         self.update_data_btn = QPushButton("🔄 به‌روزرسانی از CSV")  # دکمه جدید
         self.update_data_btn.setStyleSheet("background-color: #6272a4;")  # رنگ متمایز
 
-
-
         # --- NEW: اضافه کردن QProgressBar برای نمایش وضعیت ایندکس ---
         self.iso_progress_bar = QProgressBar()
         self.iso_progress_bar.setRange(0, 100)
@@ -1169,7 +1166,6 @@ class MainWindow(QMainWindow):
         self.iso_progress_bar.setTextVisible(True)
         self.iso_progress_bar.setFormat("ایندکس ISO: %p%")
         self.iso_progress_bar.hide()  # در ابتدا مخفی است
-
 
         self.console_output = QTextEdit()
         self.console_output.setReadOnly(True)
@@ -1184,40 +1180,42 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.iso_progress_bar)
 
     def connect_signals(self):
-        # --- اتصال دکمه‌ها ---
-        self.load_project_btn.clicked.connect(self.load_project)  # بارگذاری پروژه
-        self.register_btn.clicked.connect(self.handle_registration)  # ثبت رکورد
-        self.search_btn.clicked.connect(self.handle_search)  # جستجو
-        self.update_dashboard_btn.clicked.connect(self.handle_update_dashboard_button_click)  # آپدیت داشبورد
-        self.details_btn.clicked.connect(self.show_line_details)  # نمایش جزئیات
-        self.export_line_status_btn.clicked.connect(self.handle_line_status_export)  # خروجی گرفتن از وضعیت خط
-        self.manage_spool_btn.clicked.connect(self.open_spool_manager)  # مدیریت اسپول
-        self.update_data_btn.clicked.connect(self.handle_data_update_from_csv)  # بروزرسانی دیتا از CSV
+        self.load_project_btn.clicked.connect(self.load_project)
+        self.register_btn.clicked.connect(self.handle_registration)
+        self.search_btn.clicked.connect(self.handle_search)
 
-        # --- اتصال سیگنال‌های متنی ---
-        self.entries["Line No"].textChanged.connect(self.on_text_changed)  # تغییر متن Line No
-        self.search_entry.textChanged.connect(self.on_text_changed)  # تغییر متن جستجو
+        self.update_dashboard_btn.clicked.connect(self.handle_update_dashboard_button_click)
 
-        # --- اتصال تایمر به گرفتن پیشنهادها ---
+        self.details_btn.clicked.connect(self.show_line_details)  # اتصال دکمه جزئیات
+
+        # --- NEW: اتصال سیگنال دکمه جدید ---
+        self.export_line_status_btn.clicked.connect(self.handle_line_status_export)
+
+        self.entries["Line No"].textChanged.connect(self.on_text_changed)
+        self.search_entry.textChanged.connect(self.on_text_changed)
+
+        # <<< CHANGE: اتصال تایمر به تابع اصلی برای گرفتن پیشنهادها
         self.suggestion_timer.timeout.connect(self.fetch_suggestions)
 
-        # --- اتصال کامل‌کننده ثبت (Completer برای Line No) ---
+        # اتصال سیگنال‌ها به صورت تفکیک شده
+        # ارسال виджет ورودی به عنوان آرگومان با استفاده از lambda
         register_widget = self.entries["Line No"]
-        # تغییر داده شد → اتصال به سیگنال activated که QModelIndex برمی‌گرداند
-        self.register_completer.activated[QModelIndex].connect(
-            lambda index: self.on_suggestion_selected(index, register_widget)
+        self.register_completer.activated.connect(
+            lambda text: self.on_suggestion_selected(text, register_widget)
         )
 
-        # --- اتصال کامل‌کننده جستجو (Completer برای search_entry) ---
         search_widget = self.search_entry
-        # تغییر داده شد → اتصال به سیگنال activated که QModelIndex برمی‌گرداند
-        self.search_completer.activated[QModelIndex].connect(
-            lambda index: self.on_suggestion_selected(index, search_widget)
+        self.search_completer.activated.connect(
+            lambda text: self.on_suggestion_selected(text, search_widget)
         )
 
-        # --- اتصال ایونت هندلرها ---
-        self.iso_event_handler.status_updated.connect(self.update_iso_status_label)  # آپدیت وضعیت ISO
-        self.iso_event_handler.progress_updated.connect(self.update_iso_progress)  # آپدیت پیشرفت ISO
+        self.manage_spool_btn.clicked.connect(self.open_spool_manager)
+
+        self.update_data_btn.clicked.connect(self.handle_data_update_from_csv)
+        self.iso_event_handler.status_updated.connect(self.update_iso_status_label)
+
+        # --- NEW: اتصال سیگنال پیشرفت به اسلات جدید ---
+        self.iso_event_handler.progress_updated.connect(self.update_iso_progress)
 
     def on_text_changed(self):
         """هر بار که متن تغییر می‌کند، تایمر را ری‌استارت می‌کند."""
@@ -1233,9 +1231,7 @@ class MainWindow(QMainWindow):
                 # 🔹 یک آیتم "همه پروژه‌ها" برای حالت اولیه اضافه می‌کنیم
                 self.project_combo.addItem("همه پروژه‌ها", userData=None)
                 for proj in projects:
-                    # ❌ دیگه شیء ORM ذخیره نمی‌کنیم
-                    # ✅ فقط id و name ذخیره می‌کنیم
-                    self.project_combo.addItem(proj.name, userData={"id": proj.id, "name": proj.name})
+                    self.project_combo.addItem(proj.name, userData=proj)
         except Exception as e:
             self.log_to_console(f"خطا در بارگذاری پروژه‌ها: {e}", "error")
 
@@ -1258,59 +1254,50 @@ class MainWindow(QMainWindow):
             self.log_to_console("Global search mode is active. Project-specific reports are disabled.", "info")
 
     def fetch_suggestions(self):
+        """
+        این متد تنها پس از اتمام زمان تایمر فراخوانی می‌شود.
+        """
+        # تشخیص می‌دهیم کدام فیلد ورودی فعال است
         focused_widget = QApplication.focusWidget()
-        if not isinstance(focused_widget, QLineEdit):
-            return
-
-        text = focused_widget.text()
-        self.line_completer_model.clear()
+        if isinstance(focused_widget, QLineEdit):
+            text = focused_widget.text()
+        else:
+            return  # اگر هیچ فیلدی فعال نبود، کاری نکن
 
         if len(text) < 2:
-            self.suggestion_data = []
+            self.line_completer_model.setStringList([])
             return
 
+        # 1. دریافت داده‌های کامل از دیتابیس (با کوئری بهینه)
         self.suggestion_data = self.dm.get_line_no_suggestions(text)
 
-        # 🟢 دیباگ: ببینیم دیتا از دیتابیس چی میاد
-        print("DEBUG: suggestions from DB =", self.suggestion_data)
+        # 2. استخراج متن نمایشی برای Completer
+        display_list = [item['display'] for item in self.suggestion_data]
+        self.line_completer_model.setStringList(display_list)
 
-        for suggestion in self.suggestion_data:
-            display_text = f"{suggestion['line_no']}  |  پروژه: {suggestion.get('project_name')}"
-            print("DEBUG: building item:", display_text, " | project_id=", suggestion.get("project_id"))
+    def on_suggestion_selected(self, selected_display_text, target_widget):
+        """
+        وقتی کاربر یک پیشنهاد را انتخاب می‌کند، این متد فراخوانی می‌شود.
+        target_widget: کادر ورودی که باید آپدیت شود.
+        """
+        selected_item = next((item for item in self.suggestion_data if item['display'] == selected_display_text), None)
 
-            item = QStandardItem()
-            item.setData(display_text, Qt.ItemDataRole.DisplayRole)
-            item.setData(suggestion['line_no'], Qt.ItemDataRole.EditRole)
-            item.setData(suggestion, Qt.ItemDataRole.UserRole)
-            self.line_completer_model.appendRow(item)
-
-    def on_suggestion_selected(self, index: QModelIndex, target_widget):
-        if not index.isValid():
+        if not selected_item:
             return
 
-        selected_item_data = self.line_completer_model.data(index, Qt.ItemDataRole.UserRole)
-        print("DEBUG: selected_item_data =", selected_item_data)
+        project_name = selected_item['project_name']
+        line_no = selected_item['line_no']
 
-        if not selected_item_data:
-            return
+        index = self.project_combo.findText(project_name, Qt.MatchFlag.MatchFixedString)
+        if index >= 0:
+            self.project_combo.setCurrentIndex(index)
+            self.load_project()
 
-        project_id = selected_item_data.get("project_id")
-        line_no = selected_item_data.get("line_no")
-        print(f"DEBUG: selected line_no={line_no}, project_id={project_id}")
-
-        found = False
-        for i in range(self.project_combo.count()):
-            project_data = self.project_combo.itemData(i)
-            print(f"DEBUG: checking combo index {i} -> {project_data}")
-            if project_data and project_data.get("id") == project_id:
-                print("DEBUG: MATCHED project! setting index =", i)
-                self.project_combo.setCurrentIndex(i)
-                self.load_project()
-                found = True
-                break
-
-        if not found:
-            print(f"DEBUG: could NOT find project_id={project_id} in project_combo!")
+        # استفاده مستقیم از target_widget به جای focused_widget
+        if target_widget:
+            target_widget.blockSignals(True)
+            target_widget.setText(line_no)
+            target_widget.blockSignals(False)
 
         if self.current_project:
             self.update_line_dashboard(line_no)
@@ -1901,7 +1888,7 @@ class MainWindow(QMainWindow):
             # توقف ترد نگهبان
             if self.iso_observer:
                 self.iso_observer.stop()
-                self.iso_observer.join() # منتظر می‌مانیم تا ترد کاملا بسته شود
+                self.iso_observer.join()  # منتظر می‌مانیم تا ترد کاملا بسته شود
                 print("ISO watcher stopped.")
 
         except Exception as e:
@@ -1951,6 +1938,7 @@ class MainWindow(QMainWindow):
             self.iso_progress_bar.setFormat("Completed!")
             QTimer.singleShot(5000, lambda: self.iso_progress_bar.hide())
 
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
@@ -1967,12 +1955,14 @@ if __name__ == "__main__":
 
     # اگر لازم داری DataManager را از همین‌جا بسازی و در کل اپ share کنی:
     from data_manager import DataManager
-    app.data_manager = DataManager()      # با کرِدهای Env ساخته می‌شود
-    app.login_user = username             # برای لاگ‌ها و نمایش نام کاربر
+
+    app.data_manager = DataManager()  # با کرِدهای Env ساخته می‌شود
+    app.login_user = username  # برای لاگ‌ها و نمایش نام کاربر
 
     # --- 1) اسپلش ---
     splash = SplashScreen()
     app.processEvents()
+
 
     def start_main_window():
         splash.close()
@@ -1980,8 +1970,10 @@ if __name__ == "__main__":
         window.show()
         app.window = window  # جلوگیری از GC
 
+
     # --- 2) بعد از ۳ ثانیه اسپلش بسته شود و MainWindow بیاید
     QTimer.singleShot(3000, start_main_window)
+
 
     # --- 3) مدیریت خطاهای پیش‌بینی‌نشده (بدون تغییر)
     def excepthook(exc_type, exc_value, exc_tb):
@@ -1999,6 +1991,7 @@ if __name__ == "__main__":
             Qt.TextInteractionFlag.TextSelectableByKeyboard
         )
         box.exec()
+
 
     sys.excepthook = excepthook
     sys.exit(app.exec())
