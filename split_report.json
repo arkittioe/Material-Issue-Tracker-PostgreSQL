@@ -1,0 +1,92 @@
+{
+  "duration": 0.016971,
+  "start_time": "2025-09-02T16:32:35.992081",
+  "end_time": "2025-09-02T16:32:36.009052",
+  "files_created": 15,
+  "files_failed": 0,
+  "warnings": 0,
+  "details": {
+    "created": [
+      {
+        "name": "ui/dialogs/login_dialog.py",
+        "size": 7266,
+        "time": "2025-09-02T16:32:36.001053"
+      },
+      {
+        "name": "ui/widgets/splash_screen.py",
+        "size": 1950,
+        "time": "2025-09-02T16:32:36.002052"
+      },
+      {
+        "name": "ui/handlers/iso_index_handler.py",
+        "size": 2020,
+        "time": "2025-09-02T16:32:36.002052"
+      },
+      {
+        "name": "ui/dialogs/spool_manager_dialog.py",
+        "size": 11995,
+        "time": "2025-09-02T16:32:36.003053"
+      },
+      {
+        "name": "ui/dialogs/spool_selection_dialog.py",
+        "size": 8171,
+        "time": "2025-09-02T16:32:36.004052"
+      },
+      {
+        "name": "ui/dialogs/mto_consumption_dialog.py",
+        "size": 9750,
+        "time": "2025-09-02T16:32:36.005052"
+      },
+      {
+        "name": "ui/main_window.py",
+        "size": 51255,
+        "time": "2025-09-02T16:32:36.006052"
+      },
+      {
+        "name": "ui/__init__.py",
+        "size": 81,
+        "time": "2025-09-02T16:32:36.008051"
+      },
+      {
+        "name": "ui/dialogs/__init__.py",
+        "size": 86,
+        "time": "2025-09-02T16:32:36.008051"
+      },
+      {
+        "name": "ui/panels/__init__.py",
+        "size": 85,
+        "time": "2025-09-02T16:32:36.008051"
+      },
+      {
+        "name": "ui/utils/__init__.py",
+        "size": 84,
+        "time": "2025-09-02T16:32:36.008051"
+      },
+      {
+        "name": "ui/handlers/__init__.py",
+        "size": 87,
+        "time": "2025-09-02T16:32:36.008051"
+      },
+      {
+        "name": "ui/widgets/__init__.py",
+        "size": 86,
+        "time": "2025-09-02T16:32:36.009052"
+      },
+      {
+        "name": "ui/utils/helpers.py",
+        "size": 1371,
+        "time": "2025-09-02T16:32:36.009052"
+      },
+      {
+        "name": "main.py",
+        "size": 2725,
+        "time": "2025-09-02T16:32:36.009052"
+      }
+    ],
+    "failed": [],
+    "warnings": [],
+    "info": [
+      "تابع resource_path یافت شد و در helpers.py قرار خواهد گرفت"
+    ]
+  }
+}

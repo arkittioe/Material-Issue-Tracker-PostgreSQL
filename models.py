@@ -1,10 +1,9 @@
 # file: models.py
 
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Float, Boolean, ForeignKey, UniqueConstraint, Index
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, Float, Boolean, ForeignKey, UniqueConstraint, Index, Text, JSON
 from sqlalchemy.orm import relationship, declarative_base
 from datetime import datetime
 Base = declarative_base()
-
 # -------------------------
 # جدول پروژه‌ها
 # -------------------------
@@ -215,3 +214,184 @@ class IsoFileIndex(Base):
     normalized_name = Column(String, index=True) # ایندکس برای جستجوی سریع
     prefix_key = Column(String, index=True) # ایندکس برای جستجوی سریع
     last_modified = Column(DateTime)
+
+    # ===============================================
+    # جداول سیستم انبار (Warehouse Management)
+    # ===============================================
+
+class Warehouse(Base):
+    """جدول انبارها"""
+    __tablename__ = 'warehouses'
+
+    id = Column(Integer, primary_key=True)
+    code = Column(String(50), unique=True, nullable=False, index=True)
+    name = Column(String(200), nullable=False)
+    location = Column(String(500))
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    # Relations
+    inventory_items = relationship("InventoryItem", back_populates="warehouse")
+    transactions = relationship("InventoryTransaction", back_populates="warehouse")
+
+class InventoryItem(Base):
+    """جدول موجودی کالاها در انبار"""
+    __tablename__ = 'inventory_items'
+
+    id = Column(Integer, primary_key=True)
+    warehouse_id = Column(Integer, ForeignKey('warehouses.id'), nullable=False)
+
+    # مشخصات کالا
+    material_code = Column(String(100), nullable=False)
+    description = Column(String(500))
+    size = Column(String(100))
+    specification = Column(String(200))
+    heat_no = Column(String(100))
+
+    # موجودی
+    physical_qty = Column(Float, default=0)  # موجودی فیزیکی
+    reserved_qty = Column(Float, default=0)  # رزرو شده
+    available_qty = Column(Float, default=0)  # قابل تخصیص = physical - reserved
+
+    # اطلاعات مالی و واحد
+    unit = Column(String(50), default='EA')
+    unit_price = Column(Float, default=0)
+    total_value = Column(Float, default=0)
+
+    # آستانه‌های موجودی
+    min_stock_level = Column(Float, default=0)
+    max_stock_level = Column(Float)
+    reorder_point = Column(Float)
+
+    # تاریخ‌ها
+    last_receipt_date = Column(DateTime)
+    last_issue_date = Column(DateTime)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    # Relations
+    warehouse = relationship("Warehouse", back_populates="inventory_items")
+    transactions = relationship("InventoryTransaction", back_populates="inventory_item")
+    reservations = relationship("MaterialReservation", back_populates="inventory_item")
+
+    # Indexes
+    __table_args__ = (
+        Index('ix_inventory_warehouse_material', 'warehouse_id', 'material_code'),
+        UniqueConstraint('warehouse_id', 'material_code', 'size', 'heat_no',
+                         name='uq_inventory_item'),
+    )
+
+class InventoryTransaction(Base):
+    """جدول تراکنش‌های انبار"""
+    __tablename__ = 'inventory_transactions'
+
+    id = Column(Integer, primary_key=True)
+    warehouse_id = Column(Integer, ForeignKey('warehouses.id'), nullable=False)
+    inventory_item_id = Column(Integer, ForeignKey('inventory_items.id'), nullable=False)
+
+    # نوع تراکنش
+    transaction_type = Column(String(50), nullable=False)  # IN, OUT, ADJUST, RETURN
+    transaction_date = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    # مقادیر
+    quantity = Column(Float, nullable=False)
+    unit_price = Column(Float, default=0)
+    total_value = Column(Float, default=0)
+
+    # موجودی‌ها بعد از تراکنش
+    balance_before = Column(Float)
+    balance_after = Column(Float)
+
+    # مرجع
+    reference_type = Column(String(50))  # MIV, PO, ADJUSTMENT, etc.
+    reference_id = Column(Integer)
+    reference_no = Column(String(100))
+
+    # اطلاعات تکمیلی
+    remarks = Column(String(500))
+    performed_by = Column(String(100))
+    approved_by = Column(String(100))
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    # Relations
+    warehouse = relationship("Warehouse", back_populates="transactions")
+    inventory_item = relationship("InventoryItem", back_populates="transactions")
+
+    # Indexes
+    __table_args__ = (
+        Index('ix_transaction_date', 'transaction_date'),
+        Index('ix_transaction_reference', 'reference_type', 'reference_id'),
+    )
+
+class MaterialReservation(Base):
+    """جدول رزرو مواد"""
+    __tablename__ = 'material_reservations'
+
+    id = Column(Integer, primary_key=True)
+    inventory_item_id = Column(Integer, ForeignKey('inventory_items.id'), nullable=False)
+
+    # اطلاعات رزرو
+    reservation_no = Column(String(50), unique=True, nullable=False)
+    reserved_qty = Column(Float, nullable=False)
+    consumed_qty = Column(Float, default=0)
+    remaining_qty = Column(Float)
+
+    # مرجع رزرو
+    project_id = Column(Integer, ForeignKey('projects.id'))
+    miv_record_id = Column(Integer, ForeignKey('miv_records.id'))
+    line_no = Column(String(100))
+
+    # وضعیت و تاریخ
+    status = Column(String(50), default='ACTIVE')  # ACTIVE, CONSUMED, CANCELLED
+    reservation_date = Column(DateTime, default=datetime.utcnow)
+    expiry_date = Column(DateTime)
+
+    # اطلاعات تکمیلی
+    reserved_by = Column(String(100))
+    approved_by = Column(String(100))
+    remarks = Column(String(500))
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    # Relations
+    inventory_item = relationship("InventoryItem", back_populates="reservations")
+
+    # Indexes
+    __table_args__ = (
+        Index('ix_reservation_status', 'status'),
+        Index('ix_reservation_project', 'project_id', 'line_no'),
+    )
+
+class InventoryAdjustment(Base):
+    """جدول تعدیلات موجودی"""
+    __tablename__ = 'inventory_adjustments'
+
+    id = Column(Integer, primary_key=True)
+    inventory_item_id = Column(Integer, ForeignKey('inventory_items.id'), nullable=False)
+
+    # نوع و مقدار تعدیل
+    adjustment_type = Column(String(50), nullable=False)  # PHYSICAL_COUNT, CORRECTION, DAMAGE
+    adjustment_date = Column(DateTime, default=datetime.utcnow)
+    quantity_before = Column(Float, nullable=False)
+    quantity_after = Column(Float, nullable=False)
+    quantity_adjusted = Column(Float, nullable=False)
+
+    # دلیل و توضیحات
+    reason = Column(String(500), nullable=False)
+    reference_document = Column(String(200))
+
+    # انجام‌دهنده و تأییدکننده
+    performed_by = Column(String(100), nullable=False)
+    approved_by = Column(String(100))
+    approval_date = Column(DateTime)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    # Indexes
+    __table_args__ = (
+        Index('ix_adjustment_date', 'adjustment_date'),
+        Index('ix_adjustment_type', 'adjustment_type'),
+    )

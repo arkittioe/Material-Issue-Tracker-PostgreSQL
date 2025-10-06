@@ -22,3 +22,5 @@ DB_PASSWORD = config.get('PostgreSQL', 'password', fallback='').strip()
 # --- استخراج بقیه مقادیر ---
 ISO_PATH = config.get('Paths', 'iso_drawing_path', fallback=r'\\fs\Piping\Piping\ISO').strip()
 DASHBOARD_PASSWORD = config.get('Security', 'dashboard_password', fallback='default_password').strip()
+
+

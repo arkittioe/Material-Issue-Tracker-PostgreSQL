@@ -1,23 +1,15 @@
-# For the main application GUI
-PyQt6
+PyQt6>=6.5
 
+SQLAlchemy>=1.4
 
-SQLAlchemy
-pandas
-numpy
-psycopg2-binary
+psycopg2-binary>=2.9
 
-Flask
-Flask-Cors
-dash
-dash-bootstrap-components
-requests
-gunicorn
+matplotlib>=3.7
 
-matplotlib
+pandas>=2.0
 
-watchdog
+openpyxl>=3.1
 
-openpyxl
+watchdog>=4.0
 
-configparser
+python-dateutil>=2.8

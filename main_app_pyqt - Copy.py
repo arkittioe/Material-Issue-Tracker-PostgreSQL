@@ -1939,8 +1939,6 @@ class MainWindow(QMainWindow):
             QTimer.singleShot(5000, lambda: self.iso_progress_bar.hide())
 
 
-
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
