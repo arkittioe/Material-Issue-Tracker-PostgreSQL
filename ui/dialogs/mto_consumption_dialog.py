@@ -38,7 +38,7 @@ class MTOConsumptionDialog(QDialog):
         layout.addWidget(info_label)
 
         self.table = QTableWidget()
-        self.table.setColumnCount(13)
+        self.table.setColumnCount(15)
         self.table.setHorizontalHeaderLabels([
             # MTO Info
             "Item Code", "Description", "Total Qty", "Used (All)", "Remaining", "Unit",
@@ -47,7 +47,9 @@ class MTOConsumptionDialog(QDialog):
             # Consumption for this MIV
             "مصرف مستقیم",
             # Spool Info
-            "انتخاب اسپول", "Spool ID", "Qty from Spool", "Spool Remaining"
+            "انتخاب اسپول", "Spool ID", "Qty from Spool", "Spool Remaining",
+            # 🆕 Warehouse Selection (فاز 2)
+            "انتخاب از انبار", "مقدار از انبار"
         ])
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)
         self.table.resizeColumnsToContents()
@@ -120,7 +122,69 @@ class MTOConsumptionDialog(QDialog):
                 if item_widget:
                     item_widget.setFlags(item_widget.flags() & ~Qt.ItemFlag.ItemIsEditable)
 
+
+            warehouse_btn = QPushButton("📦 انبار")
+            warehouse_btn.setToolTip("انتخاب آیتم از انبار عمومی")
+            warehouse_btn.clicked.connect(partial(self.handle_warehouse_selection, row_idx))
+            self.table.setCellWidget(row_idx, 13, warehouse_btn)
+
+            # 🆕 نمایش مقدار انتخاب شده از انبار (ستون 14)
+            self.table.setItem(row_idx, 14, QTableWidgetItem("0"))
+
         self.table.resizeColumnsToContents()
+
+    def handle_warehouse_selection(self, row_idx):
+        """باز کردن دیالوگ انتخاب از انبار عمومی"""
+        from ui.dialogs.miv_item_selection_dialog import MIVItemSelectionDialog
+
+        item_data = self.progress_data[row_idx]
+
+        # ایجاد یک آبجکت موقت MTOItem برای ارسال به دیالوگ
+        class TempMTOItem:
+            def __init__(self, data):
+                self.id = data["mto_item_id"]
+                self.item_code = data["Item Code"]
+                self.description = data["Description"]
+                self.size_1 = data.get("Bore", "")
+                self.spec = data.get("Type", "")
+                self.qty = data["Remaining Qty"] or 0
+
+        temp_mto = TempMTOItem(item_data)
+
+        # باز کردن دیالوگ انتخاب از انبار
+        dialog = MIVItemSelectionDialog(
+            warehouse_service=self.dm.warehouse_service,
+            item_matching_service=self.dm.item_matching_service,
+            mto_item=temp_mto,
+            parent=self
+        )
+
+        if dialog.exec():
+            selected_data = dialog.selected_data
+            if selected_data:
+                # ذخیره انتخاب
+                if not hasattr(self, 'warehouse_selections'):
+                    self.warehouse_selections = {}
+
+                self.warehouse_selections[row_idx] = {
+                    'inventory_item_id': selected_data['inventory_item'].id,
+                    'quantity': selected_data['quantity'],
+                    'item_code': selected_data['inventory_item'].material_code,
+                    'description': selected_data['inventory_item'].description
+                }
+
+                # به‌روزرسانی جدول
+                self.table.item(row_idx, 14).setText(str(selected_data['quantity']))
+
+                # تنظیم مقدار مصرف مستقیم
+                remaining = item_data["Remaining Qty"] or 0
+                current_miv = self.existing_consumptions.get(item_data["mto_item_id"], 0)
+                spool_qty = float(self.table.item(row_idx, 11).text() or 0)
+                warehouse_qty = selected_data['quantity']
+
+                spin_box = self.table.cellWidget(row_idx, 8)
+                new_max = (remaining + current_miv) - spool_qty - warehouse_qty
+                spin_box.setRange(0, max(0, new_max))
 
     def handle_spool_selection(self, row_idx):
         item_data = self.progress_data[row_idx]
@@ -189,6 +253,7 @@ class MTOConsumptionDialog(QDialog):
     def accept_data(self):
         self.consumed_data = []
         self.spool_consumption_data = []
+        self.warehouse_consumption_data = []
 
         for row in range(self.table.rowCount()):
             mto_item_id = self.progress_data[row]["mto_item_id"]
@@ -211,10 +276,19 @@ class MTOConsumptionDialog(QDialog):
                         "used_qty": sel["used_qty"]  # این مقدار از قبل گرد شده
                     })
 
+            # 🆕 مصرف از انبار عمومی
+            if hasattr(self, 'warehouse_selections') and row in self.warehouse_selections:
+                warehouse_data = self.warehouse_selections[row]
+                self.warehouse_consumption_data.append({
+                    "mto_item_id": mto_item_id,
+                    "inventory_item_id": warehouse_data['inventory_item_id'],
+                    "used_qty": warehouse_data['quantity']
+                })
+
         self.accept()
 
     def get_data(self):
-        return self.consumed_data, self.spool_consumption_data
+        return self.consumed_data, self.spool_consumption_data, getattr(self, 'warehouse_consumption_data', [])
 
 
 class SpoolSelectionDialog(QDialog):

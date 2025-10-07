@@ -16,7 +16,9 @@ from sqlalchemy.orm import Session
 
 from models import (
     MIVRecord, MTOConsumption, SpoolConsumption,
-    SpoolItem, MTOItem, Project
+    SpoolItem, MTOItem, Project,InventoryItem,
+    Warehouse, InventoryTransaction, InventoryItem,
+    InventoryTransaction, MaterialReservation
 )
 
 
@@ -44,9 +46,10 @@ class MIVService:
             project_id: int,
             form_data: Dict[str, Any],
             consumption_items: List[Dict[str, Any]],
-            spool_consumption_items: Optional[List[Dict[str, Any]]] = None
+            spool_consumption_items: Optional[List[Dict[str, Any]]] = None,
+            warehouse_consumption_items: Optional[List[Dict[str, Any]]] = None
     ) -> tuple[bool, str]:
-        session: Session = self.session_factory()  # تغییر
+        session: Session = self.session_factory()
         try:
             new_record = MIVRecord(
                 project_id=project_id,
@@ -108,6 +111,25 @@ class MIVService:
 
                 if spool_notes:
                     new_record.comment = (new_record.comment or "") + " | مصرف اسپول: " + ", ".join(spool_notes)
+
+                    # 🆕 ثبت مصرف از انبار عمومی
+            if warehouse_consumption_items:
+                for item in warehouse_consumption_items:
+                    # ایجاد رکورد WarehouseConsumption یا اضافه به MTOConsumption
+                    # با inventory_item_id
+                    session.add(MTOConsumption(
+                        mto_item_id=item['mto_item_id'],
+                        miv_record_id=new_record.id,
+                        inventory_item_id=item.get('inventory_item_id'),  # 🆕
+                        used_qty=item['used_qty'],
+                        timestamp=datetime.now()
+                    ))
+
+                    # کاهش موجودی انبار
+                    if item.get('inventory_item_id'):
+                        inv_item = session.get(InventoryItem, item['inventory_item_id'])
+                        if inv_item:
+                            inv_item.reserved_qty += item['used_qty']
 
             session.commit()
 

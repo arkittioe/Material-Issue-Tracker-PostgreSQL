@@ -99,9 +99,14 @@ class MTOConsumption(Base):
     id = Column(Integer, primary_key=True)
     mto_item_id = Column(Integer, ForeignKey('mto_items.id'), nullable=False)
     miv_record_id = Column(Integer, ForeignKey('miv_records.id'), nullable=False)
+    # 🆕 فیلد جدید برای مصرف از انبار عمومی
+    inventory_item_id = Column(Integer, ForeignKey('inventory_items.id'), nullable=True)
+
     used_qty = Column(Float, nullable=False)
     timestamp = Column(DateTime, default=datetime.utcnow)
 
+    # 🆕 رابطه جدید
+    inventory_item = relationship("InventoryItem", backref="consumptions")
 
 # -------------------------
 # جدول Activity Log
