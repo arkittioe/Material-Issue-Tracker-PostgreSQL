@@ -27,7 +27,11 @@ from data.spool_service import SpoolService
 from data.report_service import ReportService
 from data.iso_service import ISOService
 from data.warehouse_service import WarehouseService
-
+from data.item_matching_service import ItemMatchingService
+from alembic import command
+from alembic.config import Config
+from alembic.script import ScriptDirectory
+import logging
 
 class DataManagerFacade:
     """
@@ -85,6 +89,12 @@ class DataManagerFacade:
 
         # اضافه کردن سرویس انبار
         self.warehouse_service = WarehouseService(
+            self.session_factory,
+            self.activity_service.log_activity
+        )
+
+        # اضافه کردن سرویس تطبیق هوشمند
+        self.item_matching_service = ItemMatchingService(
             self.session_factory,
             self.activity_service.log_activity
         )
@@ -251,17 +261,110 @@ class DataManagerFacade:
         return self.warehouse_service.get_transactions_history(*args, **kwargs)
 
     # گزارشات انبار
-    def get_inventory_summary(self, *args, **kwargs):  # ✅ اصلاح شد
+    def get_inventory_summary(self, *args, **kwargs):
         return self.warehouse_service.get_inventory_summary(*args, **kwargs)
 
-    def get_stock_movement_report(self, *args, **kwargs):  # ✅ اضافه شد
+    def get_stock_movement_report(self, *args, **kwargs):
         return self.warehouse_service.get_stock_movement_report(*args, **kwargs)
 
     def get_low_stock_items(self, *args, **kwargs):
         return self.warehouse_service.get_low_stock_items(*args, **kwargs)
 
-    def get_inventory_valuation(self, *args, **kwargs):  # ✅ اصلاح شد
+    def get_inventory_valuation(self, *args, **kwargs):
         return self.warehouse_service.get_inventory_valuation(*args, **kwargs)
 
-    def transfer_between_warehouses(self, *args, **kwargs):  # ✅ اضافه شد
+    def transfer_between_warehouses(self, *args, **kwargs):
         return self.warehouse_service.transfer_between_warehouses(*args, **kwargs)
+
+    # ---------------- ItemMatchingService -------------------
+    def find_matching_items(self, *args, **kwargs):
+        return self.item_matching_service.find_matching_items(*args, **kwargs)
+
+    def record_material_selection(self, *args, **kwargs):  # ✅ اصلاح شد
+        return self.item_matching_service.record_material_selection(*args, **kwargs)
+
+    def add_material_synonym(self, *args, **kwargs):  # ✅ اصلاح شد
+        return self.item_matching_service.add_material_synonym(*args, **kwargs)
+
+    def learn_from_mto_miv_match(self, *args, **kwargs):
+        return self.item_matching_service.learn_from_mto_miv_match(*args, **kwargs)
+
+    def get_matching_statistics(self, *args, **kwargs):
+        return self.item_matching_service.get_matching_statistics(*args, **kwargs)
+
+    # متدهای Snapshot انبار
+    def create_snapshot(self, *args, **kwargs):
+        return self.warehouse_service.create_snapshot(*args, **kwargs)
+
+    def get_snapshots(self, *args, **kwargs):
+        return self.warehouse_service.get_snapshots(*args, **kwargs)
+
+    def compare_snapshots(self, *args, **kwargs):
+        return self.warehouse_service.compare_snapshots(*args, **kwargs)
+
+    def restore_from_snapshot(self, *args, **kwargs):
+        return self.warehouse_service.restore_from_snapshot(*args, **kwargs)
+
+
+# ----------------------------------------------------------------------
+    def check_and_apply_migrations(self) -> tuple[bool, str]:
+        """
+        بررسی و اعمال خودکار migration های معلق
+
+        Returns:
+            (success, message)
+        """
+        try:
+            # پیکربندی Alembic
+            alembic_cfg = Config("alembic.ini")
+
+            # بررسی وضعیت فعلی
+            script_dir = ScriptDirectory.from_config(alembic_cfg)
+
+            with self.engine.begin() as connection:
+                # تنظیم connection برای alembic
+                alembic_cfg.attributes['connection'] = connection
+
+                # دریافت revision فعلی
+                from alembic.runtime.migration import MigrationContext
+                context = MigrationContext.configure(connection)
+                current_rev = context.get_current_revision()
+
+                # دریافت آخرین revision
+                head_rev = script_dir.get_current_head()
+
+                if current_rev == head_rev:
+                    return True, f"✅ دیتابیس به‌روز است (revision: {current_rev})"
+
+                # اعمال migrations معلق
+                logging.info(f"🔄 اعمال migrations از {current_rev} به {head_rev}")
+                command.upgrade(alembic_cfg, "head")
+
+                return True, f"✅ Migrations با موفقیت اعمال شد (به {head_rev})"
+
+        except Exception as e:
+            error_msg = f"❌ خطا در اعمال migrations: {str(e)}"
+            logging.error(error_msg)
+            return False, error_msg
+
+    def get_migration_history(self) -> list:
+        """دریافت تاریخچه migrations"""
+        try:
+            alembic_cfg = Config("alembic.ini")
+            script_dir = ScriptDirectory.from_config(alembic_cfg)
+
+            history = []
+            for revision in script_dir.walk_revisions():
+                history.append({
+                    'revision': revision.revision,
+                    'branch': revision.branch_labels,
+                    'date': revision.revision_timestamp,
+                    'message': revision.doc
+                })
+
+            return history
+        except Exception as e:
+            logging.error(f"خطا در دریافت تاریخچه: {e}")
+            return []
+
+# ---------------------------------------------------------------------------

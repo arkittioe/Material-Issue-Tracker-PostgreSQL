@@ -395,3 +395,149 @@ class InventoryAdjustment(Base):
         Index('ix_adjustment_date', 'adjustment_date'),
         Index('ix_adjustment_type', 'adjustment_type'),
     )
+
+
+# ================== مدل‌های تطبیق هوشمند متریال ==================
+
+class ItemMapping(Base):
+    """جدول ذخیره قوانین و تطبیقات آیتم‌ها"""
+    __tablename__ = 'item_mappings'
+
+    id = Column(Integer, primary_key=True)
+
+    # کد/شرح اصلی (از MTO)
+    source_code = Column(String(100), nullable=False, index=True)
+    source_description = Column(Text)
+    source_size = Column(String(50))
+    source_spec = Column(String(100))
+
+    # کد/شرح تطبیق یافته (در انبار)
+    target_code = Column(String(100), nullable=False, index=True)
+    target_description = Column(Text)
+    target_size = Column(String(50))
+    target_spec = Column(String(100))
+
+    # نوع و قدرت تطبیق
+    mapping_type = Column(String(50), default='MANUAL')  # MANUAL, RULE_BASED, ML_SUGGESTED, USER_CONFIRMED
+    confidence_score = Column(Float, default=1.0)  # 0.0 to 1.0
+
+    # قوانین تطبیق
+    mapping_rules = Column(JSON)  # ذخیره قوانین به صورت JSON
+
+    # آمار استفاده
+    usage_count = Column(Integer, default=0)
+    last_used = Column(DateTime)
+
+    # متادیتا
+    created_by = Column(String(100))
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    is_active = Column(Boolean, default=True)
+    notes = Column(Text)
+
+    # ایندکس‌ها
+    __table_args__ = (
+        Index('idx_mapping_source', 'source_code', 'source_size'),
+        Index('idx_mapping_target', 'target_code', 'target_size'),
+        Index('idx_mapping_active_type', 'is_active', 'mapping_type'),
+        UniqueConstraint('source_code', 'source_size', 'target_code', 'target_size',
+                         name='uq_source_target_mapping'),
+    )
+
+
+class MaterialSearchHistory(Base):
+    """تاریخچه جستجوهای کاربران برای یادگیری"""
+    __tablename__ = 'material_search_history'
+
+    id = Column(Integer, primary_key=True)
+
+    # اطلاعات جستجو
+    search_term = Column(String(200), nullable=False)
+    search_filters = Column(JSON)  # فیلترهای اعمال شده
+    search_context = Column(String(100))  # MIV, REPORT, etc.
+
+    # نتیجه انتخاب شده
+    selected_item_code = Column(String(100))
+    selected_item_description = Column(Text)
+    selected_warehouse_id = Column(Integer, ForeignKey('warehouses.id'))
+
+    # اطلاعات کاربر و زمان
+    user_id = Column(String(100), nullable=False)
+    project_id = Column(Integer, ForeignKey('projects.id'))
+    timestamp = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    # آیا انتخاب موفق بود؟
+    was_successful = Column(Boolean, default=True)
+    user_feedback = Column(String(50))  # CORRECT, WRONG, PARTIAL
+
+    # روابط
+    warehouse = relationship("Warehouse", backref="search_histories")
+    project = relationship("Project", backref="search_histories")
+
+    __table_args__ = (
+        Index('idx_search_timestamp', 'timestamp'),
+        Index('idx_search_user_project', 'user_id', 'project_id'),
+        Index('idx_search_term', 'search_term'),
+    )
+
+
+class MaterialSynonym(Base):
+    """مترادف‌ها و نام‌های جایگزین متریال‌ها"""
+    __tablename__ = 'material_synonyms'
+
+    id = Column(Integer, primary_key=True)
+
+    # کد اصلی
+    primary_code = Column(String(100), nullable=False, index=True)
+    primary_description = Column(Text)
+
+    # مترادف
+    synonym_code = Column(String(100))
+    synonym_description = Column(Text)
+    synonym_type = Column(String(50))  # ABBREVIATION, ALTERNATE_NAME, OLD_CODE, etc.
+
+    # اعتبار
+    is_verified = Column(Boolean, default=False)
+    confidence_score = Column(Float, default=0.5)
+
+    # متادیتا
+    source = Column(String(100))  # MANUAL, IMPORTED, LEARNED
+    created_at = Column(DateTime, default=datetime.utcnow)
+    created_by = Column(String(100))
+
+    __table_args__ = (
+        Index('idx_synonym_primary', 'primary_code'),
+        Index('idx_synonym_alternate', 'synonym_code'),
+        UniqueConstraint('primary_code', 'synonym_code', name='uq_primary_synonym'),
+    )
+
+
+class WarehouseStockSnapshot(Base):
+    """عکس لحظه‌ای از وضعیت انبار برای گزارش‌گیری و تحلیل"""
+    __tablename__ = 'warehouse_stock_snapshots'
+
+    id = Column(Integer, primary_key=True)
+    warehouse_id = Column(Integer, ForeignKey('warehouses.id'), nullable=False)
+    snapshot_date = Column(DateTime, nullable=False)
+
+    # آمار کلی
+    total_items = Column(Integer)
+    total_value = Column(Float)
+    total_reserved = Column(Float)
+
+    # جزئیات به صورت JSON
+    stock_details = Column(JSON)  # لیست آیتم‌ها با موجودی
+    low_stock_items = Column(JSON)  # آیتم‌های زیر حد مجاز
+    high_turnover_items = Column(JSON)  # آیتم‌های با گردش بالا
+
+    # متادیتا
+    created_at = Column(DateTime, default=datetime.utcnow)
+    created_by = Column(String(100))
+
+    # روابط
+    warehouse = relationship("Warehouse", backref="stock_snapshots")
+
+    __table_args__ = (
+        Index('idx_snapshot_warehouse_date', 'warehouse_id', 'snapshot_date'),
+        UniqueConstraint('warehouse_id', 'snapshot_date', name='uq_warehouse_snapshot_date'),
+    )
