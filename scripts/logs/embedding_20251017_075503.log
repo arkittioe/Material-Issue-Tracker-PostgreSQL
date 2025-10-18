@@ -1,0 +1,34 @@
+2025-10-17 07:55:03,815 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:55:03,815 | INFO     | EmbeddingGenerator | INVENTORY EMBEDDING GENERATOR v4.0
+2025-10-17 07:55:03,815 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:55:03,815 | INFO     | EmbeddingGenerator | Date: 2025-10-17 07:55:03
+2025-10-17 07:55:03,815 | INFO     | EmbeddingGenerator | Model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2025-10-17 07:55:03,815 | INFO     | EmbeddingGenerator | Embedding dimension: 384
+2025-10-17 07:55:03,815 | INFO     | EmbeddingGenerator | Batch size: 50
+2025-10-17 07:55:03,816 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:55:03,816 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:55:03,816 | INFO     | EmbeddingGenerator | EMBEDDING GENERATOR INITIALIZATION
+2025-10-17 07:55:03,816 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:55:03,816 | INFO     | EmbeddingGenerator | Loading model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2025-10-17 07:55:03,816 | INFO     | EmbeddingGenerator | This may take a few minutes on first run...
+2025-10-17 07:55:03,816 | INFO     | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2025-10-17 07:55:05,207 | INFO     | sentence_transformers.SentenceTransformer | Use pytorch device: cpu
+2025-10-17 07:55:06,408 | INFO     | EmbeddingGenerator | ✅ Model loaded successfully (dimension: 384)
+2025-10-17 07:55:06,408 | INFO     | EmbeddingGenerator | Connecting to database: 192.168.2.37:5432/miv_db
+2025-10-17 07:55:06,592 | INFO     | EmbeddingGenerator | ✅ Connected to: PostgreSQL PostgreSQL 17.6 on x...
+2025-10-17 07:55:06,595 | INFO     | EmbeddingGenerator | 📊 Database status:
+2025-10-17 07:55:06,596 | INFO     | EmbeddingGenerator |    Total items: 2,486
+2025-10-17 07:55:06,596 | INFO     | EmbeddingGenerator |    Items with embeddings: 8
+2025-10-17 07:55:06,596 | INFO     | EmbeddingGenerator |    Coverage: 0.3%
+2025-10-17 07:55:06,596 | INFO     | EmbeddingGenerator | ✅ Initialization completed successfully
+2025-10-17 07:55:06,596 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:55:06,596 | INFO     | EmbeddingGenerator | Starting embedding generation...
+2025-10-17 07:55:06,596 | INFO     | EmbeddingGenerator | Options:
+2025-10-17 07:55:06,596 | INFO     | EmbeddingGenerator |   - Force regenerate all: False
+2025-10-17 07:55:06,596 | INFO     | EmbeddingGenerator |   - Include empty items: False
+2025-10-17 07:55:06,596 | INFO     | EmbeddingGenerator |   - Verify after generation: False
+2025-10-17 07:55:06,596 | INFO     | EmbeddingGenerator | 
+2025-10-17 07:55:06,687 | INFO     | EmbeddingGenerator | 📊 Found 2,478 items to process
+2025-10-17 07:55:17,059 | ERROR    | EmbeddingGenerator | Critical error during embedding generation: 'ProfessionalEmbeddingGenerator' object has no attribute '_print_progress'
+2025-10-17 07:55:17,060 | ERROR    | EmbeddingGenerator | ❌ Fatal error: 'ProfessionalEmbeddingGenerator' object has no attribute '_print_progress'
+2025-10-17 07:55:17,061 | INFO     | EmbeddingGenerator | Database connections closed

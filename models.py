@@ -2,7 +2,10 @@
 
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Float, Boolean, ForeignKey, UniqueConstraint, Index, Text, JSON
 from sqlalchemy.orm import relationship, declarative_base
-from datetime import datetime
+from datetime import datetime, timedelta
+from sqlalchemy import Column, Text, DateTime
+import hashlib
+
 Base = declarative_base()
 # -------------------------
 # جدول پروژه‌ها
@@ -240,6 +243,7 @@ class Warehouse(Base):
     inventory_items = relationship("InventoryItem", back_populates="warehouse")
     transactions = relationship("InventoryTransaction", back_populates="warehouse")
 
+
 class InventoryItem(Base):
     """جدول موجودی کالاها در انبار"""
     __tablename__ = 'inventory_items'
@@ -247,12 +251,13 @@ class InventoryItem(Base):
     id = Column(Integer, primary_key=True)
     warehouse_id = Column(Integer, ForeignKey('warehouses.id'), nullable=False)
 
-    # مشخصات کالا
-    material_code = Column(String(100), nullable=False)
+    # مشخصات کالا - بروزرسانی شده
+    item_code = Column(String(100), nullable=False)
+    warehouse_item_number = Column(String(50))
+    type = Column(String(50), nullable=False)  # نوع آیتم (PIPE, FITTING, VALVE, etc.)
     description = Column(String(500))
     size = Column(String(100))
-    specification = Column(String(200))
-    heat_no = Column(String(100))
+    # حذف شده: specification, heat_no
 
     # موجودی
     physical_qty = Column(Float, default=0)  # موجودی فیزیکی
@@ -279,13 +284,44 @@ class InventoryItem(Base):
     warehouse = relationship("Warehouse", back_populates="inventory_items")
     transactions = relationship("InventoryTransaction", back_populates="inventory_item")
     reservations = relationship("MaterialReservation", back_populates="inventory_item")
+    # رابطه اختیاری با MTOConsumption اگر نیاز باشد
+    # mto_consumptions = relationship("MTOConsumption", back_populates="inventory_item")
 
-    # Indexes
+    # Indexes - بروزرسانی شده
     __table_args__ = (
-        Index('ix_inventory_warehouse_material', 'warehouse_id', 'material_code'),
-        UniqueConstraint('warehouse_id', 'material_code', 'size', 'heat_no',
+        Index('ix_inventory_warehouse_item', 'warehouse_id', 'item_code'),
+        Index('ix_inventory_type', 'type'),
+        UniqueConstraint('warehouse_id', 'item_code', 'size', 'type',
                          name='uq_inventory_item'),
     )
+
+    # فیلدهای جدید برای NLP
+    embedding_vector = Column(JSON, nullable=True)
+    embedding_text = Column(Text, nullable=True)
+    embedding_updated_at = Column(DateTime, nullable=True)
+
+    def get_embedding_text(self) -> str:
+        """تولید متن برای embedding"""
+        parts = []
+
+        # ترکیب فیلدهای مهم با وزن‌دهی
+        if self.item_code:
+            parts.append(f"کد: {self.item_code}")
+            parts.append(self.item_code)  # تکرار برای اهمیت بیشتر
+
+        if self.warehouse_item_number:
+            parts.append(f"شماره: {self.warehouse_item_number}")
+
+        if self.description:
+            parts.append(self.description)
+
+        if self.size:
+            parts.append(f"سایز: {self.size}")
+
+        if self.type:
+            parts.append(f"نوع: {self.type}")
+
+        return " | ".join(parts)
 
 class InventoryTransaction(Base):
     """جدول تراکنش‌های انبار"""
@@ -330,6 +366,7 @@ class InventoryTransaction(Base):
         Index('ix_transaction_reference', 'reference_type', 'reference_id'),
     )
 
+
 class MaterialReservation(Base):
     """جدول رزرو مواد"""
     __tablename__ = 'material_reservations'
@@ -370,6 +407,7 @@ class MaterialReservation(Base):
         Index('ix_reservation_project', 'project_id', 'line_no'),
     )
 
+
 class InventoryAdjustment(Base):
     """جدول تعدیلات موجودی"""
     __tablename__ = 'inventory_adjustments'
@@ -404,6 +442,7 @@ class InventoryAdjustment(Base):
 
 # ================== مدل‌های تطبیق هوشمند متریال ==================
 
+
 class ItemMapping(Base):
     """جدول ذخیره قوانین و تطبیقات آیتم‌ها"""
     __tablename__ = 'item_mappings'
@@ -414,13 +453,13 @@ class ItemMapping(Base):
     source_code = Column(String(100), nullable=False, index=True)
     source_description = Column(Text)
     source_size = Column(String(50))
-    source_spec = Column(String(100))
+    # حذف شده: source_spec
 
     # کد/شرح تطبیق یافته (در انبار)
     target_code = Column(String(100), nullable=False, index=True)
     target_description = Column(Text)
     target_size = Column(String(50))
-    target_spec = Column(String(100))
+    # حذف شده: target_spec
 
     # نوع و قدرت تطبیق
     mapping_type = Column(String(50), default='MANUAL')  # MANUAL, RULE_BASED, ML_SUGGESTED, USER_CONFIRMED
@@ -440,7 +479,9 @@ class ItemMapping(Base):
     is_active = Column(Boolean, default=True)
     notes = Column(Text)
 
-    # ایندکس‌ها
+    # این جدول رابطه‌ای با جداول دیگر ندارد
+
+    # ایندکس‌ها - بروزرسانی شده
     __table_args__ = (
         Index('idx_mapping_source', 'source_code', 'source_size'),
         Index('idx_mapping_target', 'target_code', 'target_size'),
@@ -546,3 +587,22 @@ class WarehouseStockSnapshot(Base):
         Index('idx_snapshot_warehouse_date', 'warehouse_id', 'snapshot_date'),
         UniqueConstraint('warehouse_id', 'snapshot_date', name='uq_warehouse_snapshot_date'),
     )
+
+
+class MTOEmbeddingCache(Base):
+    """کش برای ذخیره embedding های MTO"""
+    __tablename__ = 'mto_embedding_cache'
+
+    id = Column(Integer, primary_key=True)
+    mto_text = Column(Text, nullable=False, unique=True)
+    mto_text_hash = Column(String(64), nullable=False, unique=True, index=True)
+    embedding_vector = Column(JSON, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    expires_at = Column(DateTime)
+    hit_count = Column(Integer, default=0)
+
+    def __init__(self, mto_text, embedding_vector=None):
+        self.mto_text = mto_text
+        self.mto_text_hash = hashlib.sha256(mto_text.encode()).hexdigest()
+        self.embedding_vector = embedding_vector
+        self.expires_at = datetime.utcnow() + timedelta(days=30)

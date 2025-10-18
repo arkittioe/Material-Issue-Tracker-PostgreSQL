@@ -138,74 +138,72 @@ class WarehouseService:
 
     # ================== مدیریت موجودی ==================
 
-    def add_inventory_item(self, warehouse_code: str, material_code: str,
-                           description: str, size: str = None, specification: str = None,
-                           heat_no: str = None, initial_qty: float = 0, unit: str = "EA",
-                           unit_price: float = 0, **kwargs) -> InventoryItem:
-        """افزودن کالای جدید به انبار"""
+    def add_inventory_item(
+            self,
+            warehouse_code: str,
+            item_code: str,  # تغییر نام پارامتر
+            description: str,
+            size: str = None,
+            unit: str = "EA",
+            initial_qty: float = 0,
+            type: str = None,  # اضافه شد
+            warehouse_item_number: str = None  # اضافه شد
+    ) -> InventoryItem:
+        """اضافه کردن کالای جدید به انبار"""
         session = self.session_factory()
         try:
-            # پیدا کردن انبار
+            # یافتن انبار
             warehouse = session.query(Warehouse).filter_by(code=warehouse_code).first()
             if not warehouse:
-                raise ValueError(f"انبار با کد {warehouse_code} یافت نشد")
+                raise ValueError(f"انبار {warehouse_code} یافت نشد")
 
-            # بررسی عدم تکرار
+            # بررسی تکراری نبودن
             existing = session.query(InventoryItem).filter_by(
                 warehouse_id=warehouse.id,
-                material_code=material_code,
-                size=size,
-                heat_no=heat_no
+                item_code=item_code,  # تغییر
+                size=size
             ).first()
 
             if existing:
-                raise ValueError(f"کالا با این مشخصات در انبار {warehouse_code} موجود است")
+                raise ValueError(f"کالای {item_code} با سایز {size} قبلاً در انبار موجود است")
 
-            # ایجاد آیتم موجودی
-            inventory_item = InventoryItem(
+            # ایجاد آیتم جدید
+            item = InventoryItem(
                 warehouse_id=warehouse.id,
-                material_code=material_code,
+                item_code=item_code,  # تغییر
                 description=description,
                 size=size,
-                specification=specification,
-                heat_no=heat_no,
-                physical_qty=initial_qty,
-                available_qty=initial_qty,
-                reserved_qty=0,
+                type=type,  # اضافه شد
+                warehouse_item_number=warehouse_item_number,  # اضافه شد
                 unit=unit,
-                unit_price=unit_price,
-                total_value=initial_qty * unit_price,
-                **kwargs
+                available_qty=initial_qty,
+                reserved_qty=0,  # اضافه شد
+                created_at=datetime.utcnow(),
+                updated_at=datetime.utcnow()
             )
 
-            session.add(inventory_item)
-            session.flush()  # برای گرفتن ID
+            session.add(item)
 
-            # ثبت تراکنش ورود اولیه
+            # ثبت تراکنش ورودی اولیه
             if initial_qty > 0:
                 transaction = InventoryTransaction(
                     warehouse_id=warehouse.id,
-                    inventory_item_id=inventory_item.id,
+                    inventory_item_id=item.id,
                     transaction_type="IN",
                     quantity=initial_qty,
-                    unit_price=unit_price,
-                    total_value=initial_qty * unit_price,
-                    balance_before=0,
-                    balance_after=initial_qty,
                     reference_type="INITIAL",
-                    remarks="موجودی اولیه"
+                    performed_by="System",
+                    timestamp=datetime.utcnow(),
+                    notes="موجودی اولیه"
                 )
                 session.add(transaction)
+                item.last_transaction_date = datetime.utcnow()
 
             session.commit()
-            session.refresh(inventory_item)
+            self.log_activity("System", "INVENTORY_ADD",
+                              f"کالای {item_code} به انبار {warehouse_code} اضافه شد")
 
-            self._log_activity(
-                action="ADD_INVENTORY_ITEM",
-                details=f"کالای {material_code} به انبار {warehouse_code} اضافه شد"
-            )
-
-            return inventory_item
+            return item
 
         except Exception as e:
             session.rollback()
@@ -213,17 +211,32 @@ class WarehouseService:
         finally:
             session.close()
 
-    def update_inventory_item(self, item_id: int, **kwargs) -> InventoryItem:
+    def update_inventory_item(
+            self,
+            item_id: int,
+            description: str = None,
+            size: str = None,
+            unit: str = None,
+            type: str = None,  # اضافه شد
+            warehouse_item_number: str = None  # اضافه شد
+    ) -> InventoryItem:
         """به‌روزرسانی اطلاعات کالا"""
         session = self.session_factory()
         try:
-            item = session.query(InventoryItem).get(item_id)
+            item = session.query(InventoryItem).filter_by(id=item_id).first()
             if not item:
-                raise ValueError(f"کالا با شناسه {item_id} یافت نشد")
+                raise ValueError(f"کالای با شناسه {item_id} یافت نشد")
 
-            for key, value in kwargs.items():
-                if hasattr(item, key) and key not in ['id', 'warehouse_id', 'physical_qty', 'reserved_qty']:
-                    setattr(item, key, value)
+            if description is not None:
+                item.description = description
+            if size is not None:
+                item.size = size
+            if unit is not None:
+                item.unit = unit
+            if type is not None:  # اضافه شد
+                item.type = type
+            if warehouse_item_number is not None:  # اضافه شد
+                item.warehouse_item_number = warehouse_item_number
 
             item.updated_at = datetime.utcnow()
             session.commit()
@@ -237,9 +250,12 @@ class WarehouseService:
         finally:
             session.close()
 
-    def get_inventory_items(self, warehouse_code: str = None,
-                            material_code: str = None,
-                            low_stock_only: bool = False) -> List[InventoryItem]:
+    def get_inventory_items(
+            self,
+            warehouse_code: str = None,
+            item_code: str = None,  # تغییر نام پارامتر
+            low_stock_only: bool = False
+    ) -> List[InventoryItem]:
         """جستجوی کالاها در انبار"""
         session = self.session_factory()
         try:
@@ -250,19 +266,26 @@ class WarehouseService:
                 if warehouse:
                     query = query.filter_by(warehouse_id=warehouse.id)
 
-            if material_code:
-                query = query.filter(InventoryItem.material_code.like(f"%{material_code}%"))
+            if item_code:  # تغییر
+                query = query.filter(InventoryItem.item_code.like(f"%{item_code}%"))  # تغییر
 
+            # حذف فیلتر low_stock_only چون min_stock_level در مدل نداریم
+            # یا می‌توانیم بر اساس یک مقدار ثابت یا reserved_qty فیلتر کنیم
             if low_stock_only:
-                query = query.filter(InventoryItem.available_qty <= InventoryItem.min_stock_level)
+                # مثلاً آیتم‌هایی که موجودی‌شان کمتر از 10 است
+                query = query.filter(InventoryItem.available_qty <= 10)
 
-            return query.order_by(InventoryItem.material_code).all()
+            return query.order_by(InventoryItem.item_code).all()  # تغییر
 
         finally:
             session.close()
 
-    def get_inventory_by_material(self, warehouse_code: str, material_code: str,
-                                  size: str = None, heat_no: str = None) -> Optional[InventoryItem]:
+    def get_inventory_by_material(
+            self,
+            warehouse_code: str,
+            item_code: str,  # تغییر نام پارامتر
+            size: str = None
+    ) -> Optional[InventoryItem]:
         """دریافت موجودی یک کالا"""
         session = self.session_factory()
         try:
@@ -272,23 +295,26 @@ class WarehouseService:
 
             query = session.query(InventoryItem).filter_by(
                 warehouse_id=warehouse.id,
-                material_code=material_code
+                item_code=item_code  # تغییر
             )
 
             if size:
                 query = query.filter_by(size=size)
-            if heat_no:
-                query = query.filter_by(heat_no=heat_no)
 
             return query.first()
 
         finally:
             session.close()
 
-    def check_availability(self, warehouse_code: str, material_code: str,
-                           required_qty: float, size: str = None) -> Tuple[bool, float]:
+    def check_availability(
+            self,
+            warehouse_code: str,
+            item_code: str,  # تغییر نام پارامتر
+            required_qty: float,
+            size: str = None
+    ) -> Tuple[bool, float]:
         """بررسی موجودی کالا"""
-        item = self.get_inventory_by_material(warehouse_code, material_code, size)
+        item = self.get_inventory_by_material(warehouse_code, item_code, size)  # تغییر
         if not item:
             return False, 0
 
@@ -297,10 +323,16 @@ class WarehouseService:
 
     # ================== عملیات رزرو ==================
 
-    def reserve_material(self, warehouse_code: str, material_code: str,
-                         quantity: float, project_id: int = None,
-                         miv_record_id: int = None, line_no: str = None,
-                         reserved_by: str = None, remarks: str = None) -> MaterialReservation:
+    def reserve_material(
+            self,
+            warehouse_code: str,
+            item_code: str,  # تغییر نام پارامتر
+            quantity: float,
+            mto_item_id: int = None,  # تغییر از miv_record_id
+            reserved_by: str = None,
+            expiry_days: int = 30,
+            notes: str = None
+    ) -> MaterialReservation:
         """رزرو کالا"""
         session = self.session_factory()
         try:
@@ -311,45 +343,58 @@ class WarehouseService:
 
             item = session.query(InventoryItem).filter_by(
                 warehouse_id=warehouse.id,
-                material_code=material_code
+                item_code=item_code  # تغییر
             ).first()
 
             if not item:
-                raise ValueError(f"کالای {material_code} در انبار یافت نشد")
+                raise ValueError(f"کالای {item_code} در انبار یافت نشد")
 
             # بررسی موجودی
             if item.available_qty < quantity:
                 raise ValueError(f"موجودی کافی نیست. موجود: {item.available_qty}")
 
             # ایجاد رزرو
-            reservation_no = self._generate_reservation_no(session)
             reservation = MaterialReservation(
                 inventory_item_id=item.id,
-                reservation_no=reservation_no,
+                mto_item_id=mto_item_id,  # استفاده از mto_item_id
                 reserved_qty=quantity,
+                reserved_by=reserved_by or "System",
+                reservation_date=datetime.utcnow(),
+                expiry_date=datetime.utcnow() + timedelta(days=expiry_days),
+                status="ACTIVE",
                 consumed_qty=0,
-                remaining_qty=quantity,
-                project_id=project_id,
-                miv_record_id=miv_record_id,
-                line_no=line_no,
-                status='ACTIVE',
-                reserved_by=reserved_by,
-                remarks=remarks
+                notes=notes
             )
 
             session.add(reservation)
 
             # به‌روزرسانی موجودی
-            item.reserved_qty += quantity
-            item.available_qty = item.physical_qty - item.reserved_qty
+            item.available_qty -= quantity
+            item.reserved_qty = (item.reserved_qty or 0) + quantity  # اضافه شد
             item.updated_at = datetime.utcnow()
 
-            session.commit()
-            session.refresh(reservation)
+            # ثبت تراکنش
+            transaction = InventoryTransaction(
+                warehouse_id=warehouse.id,
+                inventory_item_id=item.id,
+                transaction_type="RESERVATION",
+                quantity=quantity,
+                reference_type="RESERVATION",
+                reference_id=reservation.id,
+                performed_by=reserved_by or "System",
+                timestamp=datetime.utcnow(),
+                notes=f"رزرو برای {notes or 'نامشخص'}"
+            )
+            session.add(transaction)
 
-            self._log_activity(
-                action="RESERVE_MATERIAL",
-                details=f"رزرو {quantity} {item.unit} از {material_code}"
+            item.last_transaction_date = datetime.utcnow()
+
+            session.commit()
+
+            self.log_activity(
+                reserved_by or "System",
+                "MATERIAL_RESERVE",
+                f"رزرو {quantity} {item.unit} از {item_code}"
             )
 
             return reservation
@@ -487,82 +532,78 @@ class WarehouseService:
 
     # ================== تراکنش‌های انبار ==================
 
-    def record_inventory_in(self, warehouse_code: str, material_code: str,
-                            quantity: float, unit_price: float = 0,
-                            reference_type: str = None, reference_no: str = None,
-                            performed_by: str = None, remarks: str = None,
-                            size: str = None, heat_no: str = None) -> InventoryTransaction:
+    def record_inventory_in(
+            self,
+            warehouse_code: str,
+            item_code: str,  # تغییر
+            quantity: float,
+            size: str = None,
+            description: str = None,
+            unit: str = "EA",
+            type: str = None,  # اضافه شد
+            warehouse_item_number: str = None,  # اضافه شد
+            reference_type: str = "PURCHASE",
+            reference_id: int = None,
+            performed_by: str = None,
+            notes: str = None
+    ) -> InventoryTransaction:
         """ثبت ورود کالا به انبار"""
         session = self.session_factory()
         try:
-            # پیدا کردن یا ایجاد آیتم موجودی
             warehouse = session.query(Warehouse).filter_by(code=warehouse_code).first()
             if not warehouse:
                 raise ValueError(f"انبار {warehouse_code} یافت نشد")
 
+            # جستجوی کالا یا ایجاد آن
             item = session.query(InventoryItem).filter_by(
                 warehouse_id=warehouse.id,
-                material_code=material_code,
-                size=size,
-                heat_no=heat_no
+                item_code=item_code,  # تغییر
+                size=size
             ).first()
 
             if not item:
-                # ایجاد آیتم جدید اگر وجود ندارد
+                # ایجاد کالای جدید
                 item = InventoryItem(
                     warehouse_id=warehouse.id,
-                    material_code=material_code,
+                    item_code=item_code,  # تغییر
+                    description=description or f"کالای {item_code}",
                     size=size,
-                    heat_no=heat_no,
-                    physical_qty=0,
+                    type=type,  # اضافه شد
+                    warehouse_item_number=warehouse_item_number,  # اضافه شد
+                    unit=unit,
                     available_qty=0,
-                    reserved_qty=0,
-                    unit_price=unit_price
+                    reserved_qty=0,  # اضافه شد
+                    created_at=datetime.utcnow(),
+                    updated_at=datetime.utcnow()
                 )
                 session.add(item)
                 session.flush()
 
-            # ثبت تراکنش
-            balance_before = item.physical_qty
-            balance_after = balance_before + quantity
+            # به‌روزرسانی موجودی
+            item.available_qty += quantity
+            item.last_transaction_date = datetime.utcnow()
+            item.updated_at = datetime.utcnow()
 
+            # ثبت تراکنش
             transaction = InventoryTransaction(
                 warehouse_id=warehouse.id,
                 inventory_item_id=item.id,
                 transaction_type="IN",
                 quantity=quantity,
-                unit_price=unit_price,
-                total_value=quantity * unit_price,
-                balance_before=balance_before,
-                balance_after=balance_after,
                 reference_type=reference_type,
-                reference_no=reference_no,
-                performed_by=performed_by,
-                remarks=remarks
+                reference_id=reference_id,
+                performed_by=performed_by or "System",
+                timestamp=datetime.utcnow(),
+                notes=notes
             )
+
             session.add(transaction)
-
-            # به‌روزرسانی موجودی
-            item.physical_qty += quantity
-            item.available_qty = item.physical_qty - item.reserved_qty
-            item.last_receipt_date = datetime.utcnow()
-            item.updated_at = datetime.utcnow()
-
-            # به‌روزرسانی قیمت میانگین
-            if item.unit_price > 0 and unit_price > 0:
-                total_value = (item.total_value or 0) + (quantity * unit_price)
-                item.unit_price = total_value / item.physical_qty
-                item.total_value = total_value
-            elif unit_price > 0:
-                item.unit_price = unit_price
-                item.total_value = item.physical_qty * unit_price
-
             session.commit()
-            session.refresh(transaction)
 
-            self._log_activity(
-                action="INVENTORY_IN",
-                details=f"ورود {quantity} از {material_code} به انبار {warehouse_code}"
+            self.log_activity(
+                performed_by or "System",
+                "INVENTORY_IN",
+                f"ورود {quantity} {unit} از {item_code} به انبار {warehouse_code}"
             )
 
             return transaction
@@ -573,67 +614,62 @@ class WarehouseService:
         finally:
             session.close()
 
-    def record_inventory_out(self, warehouse_code: str, material_code: str,
-                             quantity: float, miv_record_id: int = None,
-                             reference_type: str = None, reference_no: str = None,
-                             performed_by: str = None, remarks: str = None,
-                             size: str = None, heat_no: str = None) -> InventoryTransaction:
+    def record_inventory_out(
+            self,
+            warehouse_code: str,
+            item_code: str,  # تغییر
+            quantity: float,
+            size: str = None,
+            reference_type: str = "CONSUMPTION",
+            reference_id: int = None,
+            performed_by: str = None,
+            notes: str = None
+    ) -> InventoryTransaction:
         """ثبت خروج کالا از انبار"""
         session = self.session_factory()
         try:
-            # پیدا کردن آیتم موجودی
             warehouse = session.query(Warehouse).filter_by(code=warehouse_code).first()
             if not warehouse:
                 raise ValueError(f"انبار {warehouse_code} یافت نشد")
 
+            # جستجوی کالا
             item = session.query(InventoryItem).filter_by(
                 warehouse_id=warehouse.id,
-                material_code=material_code,
-                size=size,
-                heat_no=heat_no
+                item_code=item_code,  # تغییر
+                size=size
             ).first()
 
             if not item:
-                raise ValueError(f"کالای {material_code} در انبار یافت نشد")
+                raise ValueError(f"کالای {item_code} در انبار {warehouse_code} یافت نشد")
 
-            # بررسی موجودی
             if item.available_qty < quantity:
-                raise ValueError(f"موجودی کافی نیست. موجود: {item.available_qty}")
+                raise ValueError(f"موجودی کافی نیست. موجودی فعلی: {item.available_qty}")
 
-            # ثبت تراکنش
-            balance_before = item.physical_qty
-            balance_after = balance_before - quantity
+            # به‌روزرسانی مقدار موجودی
+            item.available_qty -= quantity
+            item.last_transaction_date = datetime.utcnow()
+            item.updated_at = datetime.utcnow()
 
+            # ثبت تراکنش خروج
             transaction = InventoryTransaction(
                 warehouse_id=warehouse.id,
                 inventory_item_id=item.id,
                 transaction_type="OUT",
                 quantity=quantity,
-                unit_price=item.unit_price,
-                total_value=quantity * item.unit_price,
-                balance_before=balance_before,
-                balance_after=balance_after,
-                reference_type=reference_type or "MIV",
-                reference_id=miv_record_id,
-                reference_no=reference_no,
-                performed_by=performed_by,
-                remarks=remarks
+                reference_type=reference_type,
+                reference_id=reference_id,
+                performed_by=performed_by or "System",
+                timestamp=datetime.utcnow(),
+                notes=notes
             )
+
             session.add(transaction)
-
-            # به‌روزرسانی موجودی
-            item.physical_qty -= quantity
-            item.available_qty = item.physical_qty - item.reserved_qty
-            item.last_issue_date = datetime.utcnow()
-            item.updated_at = datetime.utcnow()
-            item.total_value = item.physical_qty * item.unit_price
-
             session.commit()
-            session.refresh(transaction)
 
-            self._log_activity(
-                action="INVENTORY_OUT",
-                details=f"خروج {quantity} از {material_code} از انبار {warehouse_code}"
+            self.log_activity(
+                performed_by or "System",
+                "INVENTORY_OUT",
+                f"خروج {quantity} {item.unit} از {item_code} از انبار {warehouse_code}"
             )
 
             return transaction

@@ -1,0 +1,68 @@
+2025-10-16 16:27:36 | INFO     | EmbeddingGenerator | ============================================================
+2025-10-16 16:27:36 | INFO     | EmbeddingGenerator | 🚀 Starting Embedding Generation System
+2025-10-16 16:27:36 | INFO     | EmbeddingGenerator | ============================================================
+2025-10-16 16:27:36 | INFO     | EmbeddingGenerator | 🔄 Loading model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 (Attempt 1/3)
+2025-10-16 16:27:39 | INFO     | EmbeddingGenerator | 📥 Downloading model for the first time...
+2025-10-16 16:27:39 | INFO     | EmbeddingGenerator | ⚠️ This may take several minutes...
+2025-10-16 16:28:09 | WARNING  | EmbeddingGenerator | ⚠️ Model loading failed: HTTPSConnectionPool(host='cas-bridge.xethub.hf.co', port=443): Read timed out.
+2025-10-16 16:28:09 | INFO     | EmbeddingGenerator | ⏳ Retrying in 5 seconds...
+2025-10-16 16:28:14 | INFO     | EmbeddingGenerator | 🔄 Loading model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 (Attempt 2/3)
+2025-10-16 16:28:14 | INFO     | EmbeddingGenerator | 📦 Using cached model...
+2025-10-16 16:28:14 | WARNING  | sentence_transformers.SentenceTransformer | No sentence-transformers model found with name C:\Users\h.izadi\.cache\sentence_transformers\sentence-transformers_paraphrase-multilingual-MiniLM-L12-v2. Creating a new one with MEAN pooling.
+2025-10-16 16:28:14 | WARNING  | EmbeddingGenerator | ⚠️ Model loading failed: Error no file named pytorch_model.bin, tf_model.h5, model.ckpt.index or flax_model.msgpack found in directory C:\Users\h.izadi\.cache\sentence_transformers\sentence-transformers_paraphrase-multilingual-MiniLM-L12-v2.
+2025-10-16 16:28:14 | INFO     | EmbeddingGenerator | ⏳ Retrying in 10 seconds...
+2025-10-16 16:28:24 | INFO     | EmbeddingGenerator | 🔄 Loading model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 (Attempt 3/3)
+2025-10-16 16:28:24 | INFO     | EmbeddingGenerator | 📦 Using cached model...
+2025-10-16 16:28:24 | WARNING  | sentence_transformers.SentenceTransformer | No sentence-transformers model found with name C:\Users\h.izadi\.cache\sentence_transformers\sentence-transformers_paraphrase-multilingual-MiniLM-L12-v2. Creating a new one with MEAN pooling.
+2025-10-16 16:28:24 | ERROR    | EmbeddingGenerator | ❌ Failed to load model after 3 attempts: Error no file named pytorch_model.bin, tf_model.h5, model.ckpt.index or flax_model.msgpack found in directory C:\Users\h.izadi\.cache\sentence_transformers\sentence-transformers_paraphrase-multilingual-MiniLM-L12-v2.
+2025-10-16 16:28:24 | INFO     | EmbeddingGenerator | 💡 Solution: Check internet connection or manually download the model
+2025-10-16 16:28:24 | ERROR    | EmbeddingGenerator | ❌ Initialization failed: Error no file named pytorch_model.bin, tf_model.h5, model.ckpt.index or flax_model.msgpack found in directory C:\Users\h.izadi\.cache\sentence_transformers\sentence-transformers_paraphrase-multilingual-MiniLM-L12-v2.
+2025-10-16 16:51:36 | INFO     | EmbeddingGenerator | ============================================================
+2025-10-16 16:51:36 | INFO     | EmbeddingGenerator | 🚀 Starting Embedding Generation System
+2025-10-16 16:51:36 | INFO     | EmbeddingGenerator | ============================================================
+2025-10-16 16:51:39 | INFO     | EmbeddingGenerator | 🔄 Loading model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 (Attempt 1/3)
+2025-10-16 16:51:39 | INFO     | EmbeddingGenerator | 📥 Downloading/Loading model...
+2025-10-16 16:51:39 | INFO     | EmbeddingGenerator | ⏳ This may take 5-10 minutes depending on your connection...
+2025-10-16 16:51:41 | INFO     | EmbeddingGenerator | ✅ Model loaded successfully | Device: cpu | Dimension: 384
+2025-10-16 16:51:41 | INFO     | EmbeddingGenerator | 🔗 Connecting to database: 192.168.2.37:5432/miv_db
+2025-10-16 16:51:42 | INFO     | EmbeddingGenerator | ✅ Connected to PostgreSQL 17.6
+2025-10-16 16:51:42 | INFO     | EmbeddingGenerator | ✅ System initialized successfully
+2025-10-16 16:51:42 | INFO     | EmbeddingGenerator | ------------------------------------------------------------
+2025-10-16 16:51:42 | INFO     | EmbeddingGenerator | 📊 Total items in database: 2,486
+2025-10-16 16:51:42 | INFO     | EmbeddingGenerator | 🎯 Items to process: 2,486
+2025-10-16 16:51:42 | INFO     | EmbeddingGenerator | ------------------------------------------------------------
+2025-10-16 16:51:52 | INFO     | EmbeddingGenerator | ✅ Processed 100 items
+2025-10-16 16:52:02 | INFO     | EmbeddingGenerator | ✅ Processed 200 items
+2025-10-16 16:52:12 | INFO     | EmbeddingGenerator | ✅ Processed 300 items
+2025-10-16 16:52:22 | INFO     | EmbeddingGenerator | ✅ Processed 400 items
+2025-10-16 16:52:32 | INFO     | EmbeddingGenerator | ✅ Processed 500 items
+2025-10-16 16:52:42 | INFO     | EmbeddingGenerator | ✅ Processed 600 items
+2025-10-16 16:52:53 | INFO     | EmbeddingGenerator | ✅ Processed 700 items
+2025-10-16 16:53:03 | INFO     | EmbeddingGenerator | ✅ Processed 800 items
+2025-10-16 16:53:13 | INFO     | EmbeddingGenerator | ✅ Processed 900 items
+2025-10-16 16:53:22 | INFO     | EmbeddingGenerator | ✅ Processed 1000 items
+2025-10-16 16:53:33 | INFO     | EmbeddingGenerator | ✅ Processed 1100 items
+2025-10-16 16:53:43 | INFO     | EmbeddingGenerator | ✅ Processed 1200 items
+2025-10-16 16:53:53 | INFO     | EmbeddingGenerator | ✅ Processed 1300 items
+2025-10-16 16:54:03 | INFO     | EmbeddingGenerator | ✅ Processed 1400 items
+2025-10-16 16:54:13 | INFO     | EmbeddingGenerator | ✅ Processed 1500 items
+2025-10-16 16:54:22 | INFO     | EmbeddingGenerator | ✅ Processed 1600 items
+2025-10-16 16:54:31 | INFO     | EmbeddingGenerator | ✅ Processed 1700 items
+2025-10-16 16:54:42 | INFO     | EmbeddingGenerator | ✅ Processed 1800 items
+2025-10-16 16:54:52 | INFO     | EmbeddingGenerator | ✅ Processed 1900 items
+2025-10-16 16:55:01 | INFO     | EmbeddingGenerator | ✅ Processed 2000 items
+2025-10-16 16:55:10 | INFO     | EmbeddingGenerator | ✅ Processed 2100 items
+2025-10-16 16:55:18 | INFO     | EmbeddingGenerator | ✅ Processed 2200 items
+2025-10-16 16:55:29 | INFO     | EmbeddingGenerator | ✅ Processed 2300 items
+2025-10-16 16:55:39 | INFO     | EmbeddingGenerator | ✅ Processed 2400 items
+2025-10-16 16:55:49 | INFO     | EmbeddingGenerator | 
+============================================================
+2025-10-16 16:55:49 | INFO     | EmbeddingGenerator | 📈 Embedding Generation Summary
+2025-10-16 16:55:49 | INFO     | EmbeddingGenerator | ------------------------------------------------------------
+2025-10-16 16:55:49 | INFO     | EmbeddingGenerator | Total processed : 2,486
+2025-10-16 16:55:49 | INFO     | EmbeddingGenerator | ✅ Successful    : 2,486
+2025-10-16 16:55:49 | INFO     | EmbeddingGenerator | ♻️  From cache  : 0
+2025-10-16 16:55:49 | INFO     | EmbeddingGenerator | ⚠️ Skipped       : 0
+2025-10-16 16:55:49 | INFO     | EmbeddingGenerator | ❌ Failed        : 0
+2025-10-16 16:55:49 | INFO     | EmbeddingGenerator | ============================================================
+2025-10-16 16:55:49 | INFO     | EmbeddingGenerator | 🔚 Generator cleanup complete.

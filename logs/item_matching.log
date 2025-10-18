@@ -1,0 +1,769 @@
+2025-10-17 11:26:40,821 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##03
+            - Description:    3 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 3.0
+            - Spec: FLAN
+            
+2025-10-17 11:26:40,821 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-17 11:26:40,822 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-17 11:26:40,822 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-17 11:26:40,822 - data.item_matching_service - INFO - 
+            get_all_suggestions called with:
+            - mto_item_code: LF00GD43##03
+            - mto_description:    3 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - mto_size: 3.0
+            - mto_spec: FLAN
+            - project_id: 7
+            - user_id: None
+            
+2025-10-17 11:26:40,822 - data.item_matching_service - INFO - Searching for exact match with code: LF00GD43##03
+2025-10-17 11:26:40,822 - data.item_matching_service - ERROR - Error in get_all_suggestions: 'ItemMatchingService' object has no attribute 'find_exact_match'
+Traceback (most recent call last):
+  File "Q:\Material-Issue-Tracker-Postgres\data\item_matching_service.py", line 232, in get_all_suggestions
+    exact_matches = self.find_exact_match(mto_item_code)
+                    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ItemMatchingService' object has no attribute 'find_exact_match'. Did you mean: '_find_exact_matches'?
+2025-10-17 11:26:40,823 - ui.dialogs.miv_item_selection_dialog - INFO - Received 0 suggestions
+2025-10-17 11:29:27,294 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LP00GW39##03
+            - Description:    3 IN NS RTRP PER AWWA C950 TP1.GR 1 LINER C MANUFACTURERS STANDARD DIMENSIONS/THICKNESS, PN 12
+            - Size: 3.0
+            - Spec: PIPE
+            
+2025-10-17 11:29:27,294 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-17 11:29:27,294 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-17 11:29:27,294 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-17 11:29:27,295 - root - INFO - 
+            get_all_suggestions called with:
+            - mto_item_code: LP00GW39##03
+            - mto_description:    3 IN NS RTRP PER AWWA C950 TP1.GR 1 LINER C MANUFACTURERS STANDARD DIMENSIONS/THICKNESS, PN 12
+            - mto_size: 3.0
+            - mto_spec: PIPE
+            - project_id: 7
+            - user_id: None
+            
+2025-10-17 11:29:27,295 - root - INFO - Searching for exact match with code: LP00GW39##03
+2025-10-17 11:29:27,304 - root - INFO - Found 0 exact matches
+2025-10-17 11:29:27,304 - root - INFO - Searching for rule-based matches...
+2025-10-17 11:29:27,305 - root - ERROR - Error in get_all_suggestions: type object 'ItemMapping' has no attribute 'mto_code'
+Traceback (most recent call last):
+  File "Q:\Material-Issue-Tracker-Postgres\data\item_matching_service.py", line 266, in get_all_suggestions
+    ItemMapping.mto_code == mto_item_code
+    ^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'ItemMapping' has no attribute 'mto_code'
+2025-10-17 11:29:27,306 - ui.dialogs.miv_item_selection_dialog - INFO - Received 0 suggestions
+2025-10-17 11:35:14,576 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##X6
+            - Description:    1 1/2 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 1.5
+            - Spec: FLAN
+            
+2025-10-17 11:35:14,577 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-17 11:35:14,577 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-17 11:35:14,577 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-17 11:35:14,577 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##X6
+            mto_description:    1 1/2 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 1.5
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-17 11:35:14,577 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##X6
+2025-10-17 11:35:14,590 - root - INFO - Found 0 exact matches
+2025-10-17 11:35:14,590 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-17 11:35:14,593 - root - INFO - Found 0 active mappings
+2025-10-17 11:35:14,593 - root - INFO - Step 3: Searching based on description:    1 1/2 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-17 11:35:14,593 - root - INFO - Keywords extracted: ['1/2', 'FLANGE', 'RTR', 'BELL', 'END']
+2025-10-17 11:35:14,608 - root - INFO - Found 20 items by description
+2025-10-17 11:35:14,619 - root - INFO - Final result: returning 20 suggestions
+2025-10-17 11:35:14,620 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-17 11:35:14,620 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 910, 'item_code': 'LE40GW00##04##-LE40GW29##04##', 'warehouse_item_number': '1000087', 'description': '4 IN NS ELBOW RTRP/GRVE DEG-45 BELL END FOR 9 BARG MANUF. STANDARD BASICALY TO ASME B16.9 ( KHG3-20MW-SP-1005) U/G', 'size': '4 IN', 'type': 'ELBOW', 'unit': 'EA', 'available_qty': 2.0, 'reserved_qty': 0.0, 'warehouse_id': 6, 'warehouse_code': '7', 'warehouse_name': 'WAREHOUSE', 'confidence': 0.7, 'match_source': 'DESCRIPTION', 'match_reason': 'تطابق 3 از 5 کلمه کلیدی', 'last_transaction_date': None}
+2025-10-18 08:10:06,845 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 08:10:06,912 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##10
+            - Description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 10.0
+            - Spec: FLAN
+            
+2025-10-18 08:10:06,912 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 08:10:06,912 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 08:10:06,912 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 08:10:06,912 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##10
+            mto_description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 10.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 08:10:06,913 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##10
+2025-10-18 08:10:07,147 - root - INFO - Found 1 exact matches
+2025-10-18 08:10:07,149 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 08:10:07,158 - root - INFO - Found 0 active mappings
+2025-10-18 08:10:07,158 - root - INFO - Step 3: Searching based on description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 08:10:07,158 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 08:10:07,179 - root - INFO - Found 20 items by description
+2025-10-18 08:10:07,190 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 08:10:07,190 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 08:10:07,190 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 469, 'item_code': 'LF00GD00##10##-LF00GD43##10##', 'warehouse_item_number': '1000010', 'description': '10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005)', 'size': '10 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 7.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 08:12:02,948 - ui.dialogs.miv_item_selection_dialog - ERROR - Error in _record_material_selection: ItemMatchingService.record_user_selection() got an unexpected keyword argument 'search_query'
+Traceback (most recent call last):
+  File "Q:\Material-Issue-Tracker-Postgres\ui\dialogs\miv_item_selection_dialog.py", line 1385, in _record_material_selection
+    success = self.item_matching_service.record_user_selection(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ItemMatchingService.record_user_selection() got an unexpected keyword argument 'search_query'
+2025-10-18 08:12:46,305 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 08:12:46,309 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##14
+            - Description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 14.0
+            - Spec: FLAN
+            
+2025-10-18 08:12:46,309 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 08:12:46,310 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 08:12:46,310 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 08:12:46,310 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##14
+            mto_description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 14.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 08:12:46,310 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##14
+2025-10-18 08:12:46,322 - root - INFO - Found 1 exact matches
+2025-10-18 08:12:46,323 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 08:12:46,326 - root - INFO - Found 0 active mappings
+2025-10-18 08:12:46,326 - root - INFO - Step 3: Searching based on description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 08:12:46,326 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 08:12:46,339 - root - INFO - Found 20 items by description
+2025-10-18 08:12:46,348 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 08:12:46,348 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 08:12:46,348 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 488, 'item_code': 'LF00GD00##14##-LF00GD43##14##', 'warehouse_item_number': '1000030', 'description': '14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005) ( LF00GD00##14## )', 'size': '14 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 19.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 08:23:17,261 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 08:23:17,267 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##06
+            - Description:    6 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 6.0
+            - Spec: FLAN
+            
+2025-10-18 08:23:17,267 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 08:23:17,267 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 08:23:17,267 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 08:23:17,268 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##06
+            mto_description:    6 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 6.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 08:23:17,268 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##06
+2025-10-18 08:23:17,281 - root - INFO - Found 2 exact matches
+2025-10-18 08:23:17,283 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 08:23:17,287 - root - INFO - Found 0 active mappings
+2025-10-18 08:23:17,287 - root - INFO - Step 3: Searching based on description:    6 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 08:23:17,287 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 08:23:17,302 - root - INFO - Found 20 items by description
+2025-10-18 08:23:17,312 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 08:23:17,313 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 08:23:17,313 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 559, 'item_code': 'LF00GD00##06##-LF00GD43##06##', 'warehouse_item_number': '1000170', 'description': '6 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005) ( LF00GD00##06## )', 'size': '6 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 28.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 08:58:57,477 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 08:58:57,483 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LP00GW39##10
+            - Description:    10 IN NS RTRP PER AWWA C950 TP1.GR 1 LINER C MANUFACTURERS STANDARD DIMENSIONS/THICKNESS, PN 12
+            - Size: 10.0
+            - Spec: PIPE
+            
+2025-10-18 08:58:57,483 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 08:58:57,483 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 08:58:57,483 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 08:58:57,483 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LP00GW39##10
+            mto_description:    10 IN NS RTRP PER AWWA C950 TP1.GR 1 LINER C MANUFACTURERS STANDARD DIMENSIONS/THICKNESS, PN 12
+            mto_size: 10.0
+            mto_spec: PIPE
+            project_id: 7
+            ==========================================
+            
+2025-10-18 08:58:57,483 - root - INFO - Step 1: Searching for exact match with code: LP00GW39##10
+2025-10-18 08:58:57,492 - root - INFO - Found 0 exact matches
+2025-10-18 08:58:57,492 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 08:58:57,495 - root - INFO - Found 0 active mappings
+2025-10-18 08:58:57,495 - root - INFO - Step 3: Searching based on description:    10 IN NS RTRP PER AWWA C950 TP1.GR 1 LINER C MANUFACTURERS STANDARD DIMENSIONS/THICKNESS, PN 12
+2025-10-18 08:58:57,495 - root - INFO - Keywords extracted: ['RTRP', 'PER', 'AWWA', 'C950', 'TP1.GR']
+2025-10-18 08:58:57,530 - root - INFO - Found 20 items by description
+2025-10-18 08:58:57,539 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 08:58:57,540 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 08:58:57,540 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 909, 'item_code': 'LP00GW02##03##-LP00GW29##03##', 'warehouse_item_number': '1000078', 'description': '3 IN NS PIPE RTRP BELL & SPIGOT٫ ADHESIVE BONDED FOR 9 BARG PER AWWA C950 TP.1 GR.1 LINER C MANUF. STANDARD (KHG3-20-MW- SP-1005) ( LP00GW02##03## )', 'size': '3 IN', 'type': 'PIPE', 'unit': 'EA', 'available_qty': 500.0, 'reserved_qty': 0.0, 'warehouse_id': 6, 'warehouse_code': '7', 'warehouse_name': 'WAREHOUSE', 'confidence': 0.7, 'match_source': 'DESCRIPTION', 'match_reason': 'تطابق 4 از 5 کلمه کلیدی', 'last_transaction_date': None}
+2025-10-18 09:01:04,974 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 09:01:04,979 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##03
+            - Description:    3 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 3.0
+            - Spec: FLAN
+            
+2025-10-18 09:01:04,980 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 09:01:04,980 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 09:01:04,980 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 09:01:04,980 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##03
+            mto_description:    3 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 3.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 09:01:04,980 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##03
+2025-10-18 09:01:04,992 - root - INFO - Found 0 exact matches
+2025-10-18 09:01:04,992 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 09:01:04,996 - root - INFO - Found 0 active mappings
+2025-10-18 09:01:04,996 - root - INFO - Step 3: Searching based on description:    3 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 09:01:04,997 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 09:01:05,012 - root - INFO - Found 20 items by description
+2025-10-18 09:01:05,022 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 09:01:05,022 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 09:01:05,022 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 910, 'item_code': 'LE40GW00##04##-LE40GW29##04##', 'warehouse_item_number': '1000087', 'description': '4 IN NS ELBOW RTRP/GRVE DEG-45 BELL END FOR 9 BARG MANUF. STANDARD BASICALY TO ASME B16.9 ( KHG3-20MW-SP-1005) U/G', 'size': '4 IN', 'type': 'ELBOW', 'unit': 'EA', 'available_qty': 2.0, 'reserved_qty': 0.0, 'warehouse_id': 6, 'warehouse_code': '7', 'warehouse_name': 'WAREHOUSE', 'confidence': 0.7, 'match_source': 'DESCRIPTION', 'match_reason': 'تطابق 3 از 5 کلمه کلیدی', 'last_transaction_date': None}
+2025-10-18 09:01:33,156 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 09:01:33,161 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##14
+            - Description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 14.0
+            - Spec: FLAN
+            
+2025-10-18 09:01:33,161 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 09:01:33,162 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 09:01:33,162 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 09:01:33,162 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##14
+            mto_description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 14.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 09:01:33,162 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##14
+2025-10-18 09:01:33,170 - root - INFO - Found 1 exact matches
+2025-10-18 09:01:33,171 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 09:01:33,172 - root - INFO - Found 0 active mappings
+2025-10-18 09:01:33,172 - root - INFO - Step 3: Searching based on description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 09:01:33,172 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 09:01:33,185 - root - INFO - Found 20 items by description
+2025-10-18 09:01:33,195 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 09:01:33,195 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 09:01:33,195 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 488, 'item_code': 'LF00GD00##14##-LF00GD43##14##', 'warehouse_item_number': '1000030', 'description': '14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005) ( LF00GD00##14## )', 'size': '14 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 19.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 09:01:39,127 - ui.dialogs.miv_item_selection_dialog - ERROR - Error in _record_material_selection: ItemMatchingService.record_user_selection() got an unexpected keyword argument 'search_query'
+Traceback (most recent call last):
+  File "Q:\Material-Issue-Tracker-Postgres\ui\dialogs\miv_item_selection_dialog.py", line 1385, in _record_material_selection
+    success = self.item_matching_service.record_user_selection(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ItemMatchingService.record_user_selection() got an unexpected keyword argument 'search_query'
+2025-10-18 09:27:31,305 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 09:27:31,312 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##14
+            - Description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 14.0
+            - Spec: FLAN
+            
+2025-10-18 09:27:31,312 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 09:27:31,312 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 09:27:31,312 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 09:27:31,313 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##14
+            mto_description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 14.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 09:27:31,313 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##14
+2025-10-18 09:27:31,325 - root - INFO - Found 1 exact matches
+2025-10-18 09:27:31,327 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 09:27:31,331 - root - INFO - Found 0 active mappings
+2025-10-18 09:27:31,331 - root - INFO - Step 3: Searching based on description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 09:27:31,331 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 09:27:31,345 - root - INFO - Found 20 items by description
+2025-10-18 09:27:31,355 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 09:27:31,356 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 09:27:31,356 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 488, 'item_code': 'LF00GD00##14##-LF00GD43##14##', 'warehouse_item_number': '1000030', 'description': '14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005) ( LF00GD00##14## )', 'size': '14 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 19.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 09:27:38,175 - ui.dialogs.miv_item_selection_dialog - INFO - User selection recorded: LF00GD43##14 -> LF00GD00##14##-LF00GD43##14##
+2025-10-18 09:35:00,438 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 09:35:00,448 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##14
+            - Description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 14.0
+            - Spec: FLAN
+            
+2025-10-18 09:35:00,448 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 09:35:00,448 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 09:35:00,449 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 09:35:00,449 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##14
+            mto_description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 14.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 09:35:00,449 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##14
+2025-10-18 09:35:00,462 - root - INFO - Found 1 exact matches
+2025-10-18 09:35:00,463 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 09:35:00,467 - root - INFO - Found 0 active mappings
+2025-10-18 09:35:00,467 - root - INFO - Step 3: Searching based on description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 09:35:00,467 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 09:35:00,482 - root - INFO - Found 20 items by description
+2025-10-18 09:35:00,492 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 09:35:00,492 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 09:35:00,493 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 488, 'item_code': 'LF00GD00##14##-LF00GD43##14##', 'warehouse_item_number': '1000030', 'description': '14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005) ( LF00GD00##14## )', 'size': '14 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 19.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 09:35:04,591 - root - INFO - Created new USER_LEARNED mapping: LF00GD43##14 -> LF00GD00##14##-LF00GD43##14##
+2025-10-18 09:35:04,602 - ui.dialogs.miv_item_selection_dialog - INFO - User selection recorded: LF00GD43##14 -> LF00GD00##14##-LF00GD43##14##
+2025-10-18 09:35:21,566 - data.consumption_service - ERROR - Error analyzing feedback patterns: (psycopg2.errors.UndefinedFunction) function json_extract(json, unknown) does not exist
+LINE 1: ..._search_history.id) AS occurrence_count, avg(CAST(json_extra...
+                                                             ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: SELECT material_search_history.search_term AS material_search_history_search_term, material_search_history.selected_item_code AS material_search_history_selected_item_code, count(material_search_history.id) AS occurrence_count, avg(CAST(json_extract(material_search_history.search_filters, %(json_extract_1)s) AS FLOAT)) AS avg_confidence 
+FROM material_search_history 
+WHERE material_search_history.timestamp >= %(timestamp_1)s AND material_search_history.was_successful = true GROUP BY material_search_history.search_term, material_search_history.selected_item_code 
+HAVING count(material_search_history.id) >= %(count_1)s]
+[parameters: {'json_extract_1': '$.confidence', 'timestamp_1': datetime.datetime(2025, 9, 18, 6, 5, 21, 549259), 'count_1': 3}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-10-18 10:10:42,118 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 10:10:42,124 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##14
+            - Description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 14.0
+            - Spec: FLAN
+            
+2025-10-18 10:10:42,124 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 10:10:42,125 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 10:10:42,125 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 10:10:42,125 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##14
+            mto_description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 14.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 10:10:42,125 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##14
+2025-10-18 10:10:42,137 - root - INFO - Found 1 exact matches
+2025-10-18 10:10:42,140 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 10:10:42,144 - root - INFO - Found 0 active mappings
+2025-10-18 10:10:42,144 - root - INFO - Step 3: Searching based on description:    14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 10:10:42,144 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 10:10:42,159 - root - INFO - Found 20 items by description
+2025-10-18 10:10:42,169 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 10:10:42,169 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 10:10:42,169 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 488, 'item_code': 'LF00GD00##14##-LF00GD43##14##', 'warehouse_item_number': '1000030', 'description': '14 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005) ( LF00GD00##14## )', 'size': '14 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 19.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 10:10:58,267 - root - INFO - Updated mapping: LF00GD43##14 -> LF00GD00##14##-LF00GD43##14##, confidence: 0.72, usage: 3
+2025-10-18 10:10:58,271 - ui.dialogs.miv_item_selection_dialog - INFO - User selection recorded: LF00GD43##14 -> LF00GD00##14##-LF00GD43##14##
+2025-10-18 10:11:05,626 - data.consumption_service - ERROR - Error analyzing feedback patterns: (psycopg2.errors.UndefinedFunction) function json_extract(json, unknown) does not exist
+LINE 1: ..._search_history.id) AS occurrence_count, avg(CAST(json_extra...
+                                                             ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: SELECT material_search_history.search_term AS material_search_history_search_term, material_search_history.selected_item_code AS material_search_history_selected_item_code, count(material_search_history.id) AS occurrence_count, avg(CAST(json_extract(material_search_history.search_filters, %(json_extract_1)s) AS FLOAT)) AS avg_confidence 
+FROM material_search_history 
+WHERE material_search_history.timestamp >= %(timestamp_1)s AND material_search_history.was_successful = true GROUP BY material_search_history.search_term, material_search_history.selected_item_code 
+HAVING count(material_search_history.id) >= %(count_1)s]
+[parameters: {'json_extract_1': '$.confidence', 'timestamp_1': datetime.datetime(2025, 9, 18, 6, 41, 5, 623791), 'count_1': 3}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-10-18 10:11:53,949 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 10:11:53,956 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LFB0AD33##03
+            - Description:    3 IN NS FLANGE BLIND A105N N FF CL150 EPOXY LINED (ASME B16.5)
+            - Size: 3.0
+            - Spec: FLAN
+            
+2025-10-18 10:11:53,956 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 10:11:53,956 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 10:11:53,956 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 10:11:53,956 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LFB0AD33##03
+            mto_description:    3 IN NS FLANGE BLIND A105N N FF CL150 EPOXY LINED (ASME B16.5)
+            mto_size: 3.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 10:11:53,956 - root - INFO - Step 1: Searching for exact match with code: LFB0AD33##03
+2025-10-18 10:11:53,973 - root - INFO - Found 0 exact matches
+2025-10-18 10:11:53,973 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 10:11:53,977 - root - INFO - Found 0 active mappings
+2025-10-18 10:11:53,977 - root - INFO - Step 3: Searching based on description:    3 IN NS FLANGE BLIND A105N N FF CL150 EPOXY LINED (ASME B16.5)
+2025-10-18 10:11:53,977 - root - INFO - Keywords extracted: ['FLANGE', 'BLIND', 'A105N', 'CL150', 'EPOXY']
+2025-10-18 10:11:53,990 - root - INFO - Found 20 items by description
+2025-10-18 10:11:54,000 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 10:11:54,000 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 10:11:54,000 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 1166, 'item_code': 'LF00AD55##02##-LF00AD01##02##(B11)', 'warehouse_item_number': '1000436', 'description': '2 IN NS FLANGE A105 GALVANIZED THRD(NPT) RF CL150 ASME B16.5 ( LF00AD55##02## )', 'size': '2 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 16.0, 'reserved_qty': 0.0, 'warehouse_id': 6, 'warehouse_code': '7', 'warehouse_name': 'WAREHOUSE', 'confidence': 0.6, 'match_source': 'DESCRIPTION', 'match_reason': 'تطابق 2 از 5 کلمه کلیدی', 'last_transaction_date': None}
+2025-10-18 10:12:02,873 - ui.dialogs.miv_item_selection_dialog - INFO - User selection recorded: LFB0AD33##03 -> LF00AD55##02##-LF00AD01##02##(B11)
+2025-10-18 10:12:09,321 - data.consumption_service - ERROR - Error analyzing feedback patterns: (psycopg2.errors.UndefinedFunction) function json_extract(json, unknown) does not exist
+LINE 1: ..._search_history.id) AS occurrence_count, avg(CAST(json_extra...
+                                                             ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: SELECT material_search_history.search_term AS material_search_history_search_term, material_search_history.selected_item_code AS material_search_history_selected_item_code, count(material_search_history.id) AS occurrence_count, avg(CAST(json_extract(material_search_history.search_filters, %(json_extract_1)s) AS FLOAT)) AS avg_confidence 
+FROM material_search_history 
+WHERE material_search_history.timestamp >= %(timestamp_1)s AND material_search_history.was_successful = true GROUP BY material_search_history.search_term, material_search_history.selected_item_code 
+HAVING count(material_search_history.id) >= %(count_1)s]
+[parameters: {'json_extract_1': '$.confidence', 'timestamp_1': datetime.datetime(2025, 9, 18, 6, 42, 9, 320425), 'count_1': 3}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-10-18 10:12:47,710 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 10:12:47,715 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LFB0AD33##03
+            - Description:    3 IN NS FLANGE BLIND A105N N FF CL150 EPOXY LINED (ASME B16.5)
+            - Size: 3.0
+            - Spec: FLAN
+            
+2025-10-18 10:12:47,715 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 10:12:47,715 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 10:12:47,716 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 10:12:47,716 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LFB0AD33##03
+            mto_description:    3 IN NS FLANGE BLIND A105N N FF CL150 EPOXY LINED (ASME B16.5)
+            mto_size: 3.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 10:12:47,716 - root - INFO - Step 1: Searching for exact match with code: LFB0AD33##03
+2025-10-18 10:12:47,724 - root - INFO - Found 0 exact matches
+2025-10-18 10:12:47,724 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 10:12:47,725 - root - INFO - Found 0 active mappings
+2025-10-18 10:12:47,725 - root - INFO - Step 3: Searching based on description:    3 IN NS FLANGE BLIND A105N N FF CL150 EPOXY LINED (ASME B16.5)
+2025-10-18 10:12:47,725 - root - INFO - Keywords extracted: ['FLANGE', 'BLIND', 'A105N', 'CL150', 'EPOXY']
+2025-10-18 10:12:47,738 - root - INFO - Found 20 items by description
+2025-10-18 10:12:47,748 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 10:12:47,748 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 10:12:47,748 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 1166, 'item_code': 'LF00AD55##02##-LF00AD01##02##(B11)', 'warehouse_item_number': '1000436', 'description': '2 IN NS FLANGE A105 GALVANIZED THRD(NPT) RF CL150 ASME B16.5 ( LF00AD55##02## )', 'size': '2 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 16.0, 'reserved_qty': 0.0, 'warehouse_id': 6, 'warehouse_code': '7', 'warehouse_name': 'WAREHOUSE', 'confidence': 0.6, 'match_source': 'DESCRIPTION', 'match_reason': 'تطابق 2 از 5 کلمه کلیدی', 'last_transaction_date': None}
+2025-10-18 10:13:22,190 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 10:13:22,194 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##10
+            - Description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 10.0
+            - Spec: FLAN
+            
+2025-10-18 10:13:22,194 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 10:13:22,194 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 10:13:22,194 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 10:13:22,194 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##10
+            mto_description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 10.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 10:13:22,195 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##10
+2025-10-18 10:13:22,203 - root - INFO - Found 1 exact matches
+2025-10-18 10:13:22,204 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 10:13:22,205 - root - INFO - Found 0 active mappings
+2025-10-18 10:13:22,205 - root - INFO - Step 3: Searching based on description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 10:13:22,205 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 10:13:22,218 - root - INFO - Found 20 items by description
+2025-10-18 10:13:22,228 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 10:13:22,228 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 10:13:22,229 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 469, 'item_code': 'LF00GD00##10##-LF00GD43##10##', 'warehouse_item_number': '1000010', 'description': '10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005)', 'size': '10 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 7.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 10:13:29,989 - ui.dialogs.miv_item_selection_dialog - INFO - User selection recorded: LF00GD43##10 -> LF00GD00##10##-LF00GD43##10##
+2025-10-18 10:13:33,017 - data.consumption_service - ERROR - Error analyzing feedback patterns: (psycopg2.errors.UndefinedFunction) function json_extract(json, unknown) does not exist
+LINE 1: ..._search_history.id) AS occurrence_count, avg(CAST(json_extra...
+                                                             ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: SELECT material_search_history.search_term AS material_search_history_search_term, material_search_history.selected_item_code AS material_search_history_selected_item_code, count(material_search_history.id) AS occurrence_count, avg(CAST(json_extract(material_search_history.search_filters, %(json_extract_1)s) AS FLOAT)) AS avg_confidence 
+FROM material_search_history 
+WHERE material_search_history.timestamp >= %(timestamp_1)s AND material_search_history.was_successful = true GROUP BY material_search_history.search_term, material_search_history.selected_item_code 
+HAVING count(material_search_history.id) >= %(count_1)s]
+[parameters: {'json_extract_1': '$.confidence', 'timestamp_1': datetime.datetime(2025, 9, 18, 6, 43, 33, 16748), 'count_1': 3}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-10-18 10:13:45,712 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 10:13:45,718 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##10
+            - Description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 10.0
+            - Spec: FLAN
+            
+2025-10-18 10:13:45,718 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 10:13:45,718 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 10:13:45,718 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 10:13:45,719 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##10
+            mto_description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 10.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 10:13:45,719 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##10
+2025-10-18 10:13:45,729 - root - INFO - Found 1 exact matches
+2025-10-18 10:13:45,730 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 10:13:45,731 - root - INFO - Found 0 active mappings
+2025-10-18 10:13:45,731 - root - INFO - Step 3: Searching based on description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 10:13:45,731 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 10:13:45,744 - root - INFO - Found 20 items by description
+2025-10-18 10:13:45,753 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 10:13:45,754 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 10:13:45,754 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 469, 'item_code': 'LF00GD00##10##-LF00GD43##10##', 'warehouse_item_number': '1000010', 'description': '10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005)', 'size': '10 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 7.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 10:14:05,064 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 10:14:05,070 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##10
+            - Description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 10.0
+            - Spec: FLAN
+            
+2025-10-18 10:14:05,070 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 10:14:05,070 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 10:14:05,070 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 10:14:05,070 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##10
+            mto_description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 10.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 10:14:05,071 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##10
+2025-10-18 10:14:05,079 - root - INFO - Found 1 exact matches
+2025-10-18 10:14:05,080 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 10:14:05,081 - root - INFO - Found 0 active mappings
+2025-10-18 10:14:05,081 - root - INFO - Step 3: Searching based on description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 10:14:05,081 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 10:14:05,094 - root - INFO - Found 20 items by description
+2025-10-18 10:14:05,104 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 10:14:05,104 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 10:14:05,104 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 469, 'item_code': 'LF00GD00##10##-LF00GD43##10##', 'warehouse_item_number': '1000010', 'description': '10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005)', 'size': '10 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 7.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 10:14:17,902 - root - INFO - Created new USER_LEARNED mapping: LF00GD43##10 -> LF00GD00##10##-LF00GD43##10##
+2025-10-18 10:14:17,905 - ui.dialogs.miv_item_selection_dialog - INFO - User selection recorded: LF00GD43##10 -> LF00GD00##10##-LF00GD43##10##
+2025-10-18 10:14:19,370 - data.consumption_service - ERROR - Error analyzing feedback patterns: (psycopg2.errors.UndefinedFunction) function json_extract(json, unknown) does not exist
+LINE 1: ..._search_history.id) AS occurrence_count, avg(CAST(json_extra...
+                                                             ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: SELECT material_search_history.search_term AS material_search_history_search_term, material_search_history.selected_item_code AS material_search_history_selected_item_code, count(material_search_history.id) AS occurrence_count, avg(CAST(json_extract(material_search_history.search_filters, %(json_extract_1)s) AS FLOAT)) AS avg_confidence 
+FROM material_search_history 
+WHERE material_search_history.timestamp >= %(timestamp_1)s AND material_search_history.was_successful = true GROUP BY material_search_history.search_term, material_search_history.selected_item_code 
+HAVING count(material_search_history.id) >= %(count_1)s]
+[parameters: {'json_extract_1': '$.confidence', 'timestamp_1': datetime.datetime(2025, 9, 18, 6, 44, 19, 369072), 'count_1': 3}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-10-18 10:14:32,488 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 10:14:32,495 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LP00GW39##03
+            - Description:    3 IN NS RTRP PER AWWA C950 TP1.GR 1 LINER C MANUFACTURERS STANDARD DIMENSIONS/THICKNESS, PN 12
+            - Size: 3.0
+            - Spec: PIPE
+            
+2025-10-18 10:14:32,495 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 10:14:32,495 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 10:14:32,495 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 10:14:32,495 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LP00GW39##03
+            mto_description:    3 IN NS RTRP PER AWWA C950 TP1.GR 1 LINER C MANUFACTURERS STANDARD DIMENSIONS/THICKNESS, PN 12
+            mto_size: 3.0
+            mto_spec: PIPE
+            project_id: 7
+            ==========================================
+            
+2025-10-18 10:14:32,495 - root - INFO - Step 1: Searching for exact match with code: LP00GW39##03
+2025-10-18 10:14:32,508 - root - INFO - Found 0 exact matches
+2025-10-18 10:14:32,508 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 10:14:32,510 - root - INFO - Found 0 active mappings
+2025-10-18 10:14:32,510 - root - INFO - Step 3: Searching based on description:    3 IN NS RTRP PER AWWA C950 TP1.GR 1 LINER C MANUFACTURERS STANDARD DIMENSIONS/THICKNESS, PN 12
+2025-10-18 10:14:32,510 - root - INFO - Keywords extracted: ['RTRP', 'PER', 'AWWA', 'C950', 'TP1.GR']
+2025-10-18 10:14:32,555 - root - INFO - Found 20 items by description
+2025-10-18 10:14:32,566 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 10:14:32,566 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 10:14:32,566 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 909, 'item_code': 'LP00GW02##03##-LP00GW29##03##', 'warehouse_item_number': '1000078', 'description': '3 IN NS PIPE RTRP BELL & SPIGOT٫ ADHESIVE BONDED FOR 9 BARG PER AWWA C950 TP.1 GR.1 LINER C MANUF. STANDARD (KHG3-20-MW- SP-1005) ( LP00GW02##03## )', 'size': '3 IN', 'type': 'PIPE', 'unit': 'EA', 'available_qty': 500.0, 'reserved_qty': 0.0, 'warehouse_id': 6, 'warehouse_code': '7', 'warehouse_name': 'WAREHOUSE', 'confidence': 0.7, 'match_source': 'DESCRIPTION', 'match_reason': 'تطابق 4 از 5 کلمه کلیدی', 'last_transaction_date': None}
+2025-10-18 10:15:04,376 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 10:15:04,382 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##10
+            - Description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 10.0
+            - Spec: FLAN
+            
+2025-10-18 10:15:04,382 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 10:15:04,382 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 10:15:04,382 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 10:15:04,382 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##10
+            mto_description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 10.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 10:15:04,382 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##10
+2025-10-18 10:15:04,394 - root - INFO - Found 1 exact matches
+2025-10-18 10:15:04,395 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 10:15:04,395 - root - INFO - Found 0 active mappings
+2025-10-18 10:15:04,395 - root - INFO - Step 3: Searching based on description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 10:15:04,395 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 10:15:04,409 - root - INFO - Found 20 items by description
+2025-10-18 10:15:04,419 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 10:15:04,419 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 10:15:04,419 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 469, 'item_code': 'LF00GD00##10##-LF00GD43##10##', 'warehouse_item_number': '1000010', 'description': '10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005)', 'size': '10 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 7.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 10:15:23,664 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 10:15:23,670 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##10
+            - Description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 10.0
+            - Spec: FLAN
+            
+2025-10-18 10:15:23,670 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 10:15:23,670 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 10:15:23,671 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 10:15:23,671 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##10
+            mto_description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 10.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 10:15:23,671 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##10
+2025-10-18 10:15:23,682 - root - INFO - Found 1 exact matches
+2025-10-18 10:15:23,682 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 10:15:23,683 - root - INFO - Found 0 active mappings
+2025-10-18 10:15:23,683 - root - INFO - Step 3: Searching based on description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 10:15:23,683 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 10:15:23,696 - root - INFO - Found 20 items by description
+2025-10-18 10:15:23,705 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 10:15:23,706 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 10:15:23,706 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 469, 'item_code': 'LF00GD00##10##-LF00GD43##10##', 'warehouse_item_number': '1000010', 'description': '10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005)', 'size': '10 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 7.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 10:15:28,909 - root - INFO - Updated mapping: LF00GD43##10 -> LF00GD00##10##-LF00GD43##10##, confidence: 0.72, usage: 3
+2025-10-18 10:15:28,911 - ui.dialogs.miv_item_selection_dialog - INFO - User selection recorded: LF00GD43##10 -> LF00GD00##10##-LF00GD43##10##
+2025-10-18 10:15:32,215 - data.consumption_service - ERROR - Error analyzing feedback patterns: (psycopg2.errors.UndefinedFunction) function json_extract(json, unknown) does not exist
+LINE 1: ..._search_history.id) AS occurrence_count, avg(CAST(json_extra...
+                                                             ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: SELECT material_search_history.search_term AS material_search_history_search_term, material_search_history.selected_item_code AS material_search_history_selected_item_code, count(material_search_history.id) AS occurrence_count, avg(CAST(json_extract(material_search_history.search_filters, %(json_extract_1)s) AS FLOAT)) AS avg_confidence 
+FROM material_search_history 
+WHERE material_search_history.timestamp >= %(timestamp_1)s AND material_search_history.was_successful = true GROUP BY material_search_history.search_term, material_search_history.selected_item_code 
+HAVING count(material_search_history.id) >= %(count_1)s]
+[parameters: {'json_extract_1': '$.confidence', 'timestamp_1': datetime.datetime(2025, 9, 18, 6, 45, 32, 214940), 'count_1': 3}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-10-18 10:16:03,537 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 10:16:03,543 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##10
+            - Description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 10.0
+            - Spec: FLAN
+            
+2025-10-18 10:16:03,543 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 10:16:03,543 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 10:16:03,543 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 10:16:03,544 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##10
+            mto_description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 10.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 10:16:03,544 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##10
+2025-10-18 10:16:03,557 - root - INFO - Found 1 exact matches
+2025-10-18 10:16:03,558 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 10:16:03,559 - root - INFO - Found 0 active mappings
+2025-10-18 10:16:03,560 - root - INFO - Step 3: Searching based on description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 10:16:03,560 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 10:16:03,579 - root - INFO - Found 20 items by description
+2025-10-18 10:16:03,589 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 10:16:03,589 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 10:16:03,589 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 469, 'item_code': 'LF00GD00##10##-LF00GD43##10##', 'warehouse_item_number': '1000010', 'description': '10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005)', 'size': '10 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 7.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 10:16:47,124 - ui.dialogs.miv_item_selection_dialog - ERROR - Error in warehouse search: (psycopg2.ProgrammingError) can't adapt type 'dict'
+[SQL: SELECT warehouses.id AS warehouses_id, warehouses.code AS warehouses_code, warehouses.name AS warehouses_name, warehouses.location AS warehouses_location, warehouses.is_active AS warehouses_is_active, warehouses.created_at AS warehouses_created_at, warehouses.updated_at AS warehouses_updated_at 
+FROM warehouses 
+WHERE warehouses.code = %(code_1)s 
+ LIMIT %(param_1)s]
+[parameters: {'code_1': {'search_text': '1000', 'type': 'FLANGE'}, 'param_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-10-18 10:16:52,803 - ui.dialogs.miv_item_selection_dialog - ERROR - Error in warehouse search: (psycopg2.ProgrammingError) can't adapt type 'dict'
+[SQL: SELECT warehouses.id AS warehouses_id, warehouses.code AS warehouses_code, warehouses.name AS warehouses_name, warehouses.location AS warehouses_location, warehouses.is_active AS warehouses_is_active, warehouses.created_at AS warehouses_created_at, warehouses.updated_at AS warehouses_updated_at 
+FROM warehouses 
+WHERE warehouses.code = %(code_1)s 
+ LIMIT %(param_1)s]
+[parameters: {'code_1': {'search_text': '10000', 'type': 'FLANGE'}, 'param_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-10-18 10:18:15,906 - ui.dialogs.miv_item_selection_dialog - WARNING - No ConsumptionService available - feedback recording disabled
+2025-10-18 10:18:15,911 - ui.dialogs.miv_item_selection_dialog - INFO - 
+            MTO Item Details:
+            - Code: LF00GD43##10
+            - Description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            - Size: 10.0
+            - Spec: FLAN
+            
+2025-10-18 10:18:15,911 - ui.dialogs.miv_item_selection_dialog - INFO - Found project_id: 7
+2025-10-18 10:18:15,911 - ui.dialogs.miv_item_selection_dialog - WARNING - No user_id found in parent
+2025-10-18 10:18:15,911 - ui.dialogs.miv_item_selection_dialog - INFO - Calling get_all_suggestions...
+2025-10-18 10:18:15,911 - root - INFO - 
+            ========== get_all_suggestions ==========
+            mto_item_code: LF00GD43##10
+            mto_description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+            mto_size: 10.0
+            mto_spec: FLAN
+            project_id: 7
+            ==========================================
+            
+2025-10-18 10:18:15,911 - root - INFO - Step 1: Searching for exact match with code: LF00GD43##10
+2025-10-18 10:18:15,920 - root - INFO - Found 1 exact matches
+2025-10-18 10:18:15,921 - root - INFO - Step 2: Searching for rule-based matches...
+2025-10-18 10:18:15,922 - root - INFO - Found 0 active mappings
+2025-10-18 10:18:15,922 - root - INFO - Step 3: Searching based on description:    10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG
+2025-10-18 10:18:15,922 - root - INFO - Keywords extracted: ['FLANGE', 'RTR', 'BELL', 'END', 'CL150']
+2025-10-18 10:18:15,935 - root - INFO - Found 20 items by description
+2025-10-18 10:18:15,945 - root - INFO - Final result: returning 20 suggestions
+2025-10-18 10:18:15,945 - ui.dialogs.miv_item_selection_dialog - INFO - Received 20 suggestions
+2025-10-18 10:18:15,945 - ui.dialogs.miv_item_selection_dialog - INFO - First suggestion: {'item_id': 469, 'item_code': 'LF00GD00##10##-LF00GD43##10##', 'warehouse_item_number': '1000010', 'description': '10 IN NS FLANGE RTR BELL END FF CL150 ASME B16.5 FOR 12 BARG (KHG3-20-MW-SP-1005)', 'size': '10 IN', 'type': 'FLANGE', 'unit': 'EA', 'available_qty': 7.0, 'reserved_qty': 0.0, 'warehouse_id': 3, 'warehouse_code': '12', 'warehouse_name': 'فراب', 'confidence': 0.85, 'match_source': 'EXACT', 'match_reason': 'تطابق جزئی', 'last_transaction_date': None}
+2025-10-18 10:22:19,140 - data.consumption_service - ERROR - Error analyzing feedback patterns: (psycopg2.errors.UndefinedFunction) function json_extract(json, unknown) does not exist
+LINE 1: ..._search_history.id) AS occurrence_count, avg(CAST(json_extra...
+                                                             ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: SELECT material_search_history.search_term AS material_search_history_search_term, material_search_history.selected_item_code AS material_search_history_selected_item_code, count(material_search_history.id) AS occurrence_count, avg(CAST(json_extract(material_search_history.search_filters, %(json_extract_1)s) AS FLOAT)) AS avg_confidence 
+FROM material_search_history 
+WHERE material_search_history.timestamp >= %(timestamp_1)s AND material_search_history.was_successful = true GROUP BY material_search_history.search_term, material_search_history.selected_item_code 
+HAVING count(material_search_history.id) >= %(count_1)s]
+[parameters: {'json_extract_1': '$.confidence', 'timestamp_1': datetime.datetime(2025, 9, 18, 6, 52, 19, 139755), 'count_1': 3}]
+(Background on this error at: https://sqlalche.me/e/20/f405)

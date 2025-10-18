@@ -1238,20 +1238,40 @@ class MainWindow(QMainWindow):
         scrollbar = self.console_output.verticalScrollBar()
         scrollbar.setValue(scrollbar.maximum())
 
-    def show_message(self, title, message, msg_type="info"):
-        """نمایش پیام به کاربر"""
-        if msg_type == "info":
-            QMessageBox.information(self, title, message)
-        elif msg_type == "warning":
-            QMessageBox.warning(self, title, message)
-        elif msg_type == "error":
-            QMessageBox.critical(self, title, message)
-        elif msg_type == "question":
-            return QMessageBox.question(
-                self, title, message,
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-                QMessageBox.StandardButton.No
-            )
+    def show_message(self, message: str, message_type: str = "info", duration: int = 3000):
+        """
+        نمایش پیام در status bar با پشتیبانی از duration
+
+        Args:
+            message: متن پیام
+            message_type: نوع پیام (info, warning, error, success)
+            duration: مدت زمان نمایش به میلی‌ثانیه (پیش‌فرض 3 ثانیه)
+        """
+        if hasattr(self, 'statusBar'):
+            # تنظیم استایل بر اساس نوع پیام
+            style_map = {
+                'info': 'color: blue;',
+                'warning': 'color: orange;',
+                'error': 'color: red; font-weight: bold;',
+                'success': 'color: green; font-weight: bold;'
+            }
+
+            style = style_map.get(message_type, '')
+            if style:
+                self.statusBar().setStyleSheet(style)
+
+            self.statusBar().showMessage(message, duration)
+
+        # همچنین در کنسول لاگ کنیم
+        import logging
+        logger = logging.getLogger(__name__)
+
+        if message_type == 'error':
+            logger.error(message)
+        elif message_type == 'warning':
+            logger.warning(message)
+        else:
+            logger.info(message)
 
     def show_line_details(self):
         """نمایش جزئیات پروژه در مرورگر (داشبورد وب)"""

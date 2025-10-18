@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-10-17T08:00:07.502770",
+  "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "embedding_dimension": 384,
+  "statistics": {
+    "start_time": "2025-10-17T07:59:25.069489",
+    "end_time": "2025-10-17T08:00:07.498194",
+    "total_items": 2486,
+    "items_to_process": 1978,
+    "processed": 1978,
+    "successful": 1978,
+    "failed": 0,
+    "skipped": 0,
+    "already_embedded": 0,
+    "errors": []
+  },
+  "database": {
+    "host": "192.168.2.37",
+    "port": 5432,
+    "database": "miv_db"
+  }
+}

@@ -1,0 +1,10 @@
+2025-10-16 16:21:54,518 | ERROR    | 🚨 خطای بحرانی: cannot import name 'SentenceTransformerError' from 'sentence_transformers' (Q:\Material-Issue-Tracker-Postgres\.venv\Lib\site-packages\sentence_transformers\__init__.py)
+Traceback (most recent call last):
+  File "Q:\Material-Issue-Tracker-Postgres\scripts\generate_embeddings.py", line 189, in main
+    gen.initialize()
+  File "Q:\Material-Issue-Tracker-Postgres\scripts\generate_embeddings.py", line 62, in initialize
+    self._load_model()
+  File "Q:\Material-Issue-Tracker-Postgres\scripts\generate_embeddings.py", line 68, in _load_model
+    from sentence_transformers import SentenceTransformer, SentenceTransformerError
+ImportError: cannot import name 'SentenceTransformerError' from 'sentence_transformers' (Q:\Material-Issue-Tracker-Postgres\.venv\Lib\site-packages\sentence_transformers\__init__.py). Did you mean: 'SentenceTransformer'?
+2025-10-16 16:21:54,520 | INFO     | 🧹 اتصال دیتابیس بسته شد.

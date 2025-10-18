@@ -32,6 +32,9 @@ from alembic import command
 from alembic.config import Config
 from alembic.script import ScriptDirectory
 import logging
+from data.mto_warehouse_coordinator import MTOWarehouseCoordinator
+
+
 
 class DataManagerFacade:
     """
@@ -97,6 +100,14 @@ class DataManagerFacade:
         self.item_matching_service = ItemMatchingService(
             self.session_factory,
             self.activity_service.log_activity
+        )
+        self.mto_warehouse_coordinator = MTOWarehouseCoordinator(
+            session_factory=self.session_factory,
+            warehouse_service=self.warehouse_service,
+            item_matching_service=self.item_matching_service,
+            mto_service=self.mto_service,
+            log_activity=self.activity_service.log_activity  # ✅ صحیح
+
         )
 
     # ----------------- DB Utils -----------------
@@ -280,6 +291,13 @@ class DataManagerFacade:
     def find_matching_items(self, *args, **kwargs):
         return self.item_matching_service.find_matching_items(*args, **kwargs)
 
+    def find_warehouse_items(self, *args, **kwargs):
+        return self.item_matching_service.find_warehouse_items(*args, **kwargs)
+
+    def find_warehouse_items_for_mto(self, *args, **kwargs):
+        # اگر متد را در item_matching_service اضافه کردیم
+        return self.item_matching_service.find_warehouse_items_for_mto(*args, **kwargs)
+
     def record_material_selection(self, *args, **kwargs):  # ✅ اصلاح شد
         return self.item_matching_service.record_material_selection(*args, **kwargs)
 
@@ -368,3 +386,12 @@ class DataManagerFacade:
             return []
 
 # ---------------------------------------------------------------------------
+# ---------------- MTOWarehouseCoordinator -------------------
+    def find_and_reserve_for_mto(self, *args, **kwargs):
+        return self.mto_warehouse_coordinator.find_and_reserve_for_mto(*args, **kwargs)
+
+    def process_miv_warehouse_consumption(self, *args, **kwargs):
+        return self.mto_warehouse_coordinator.process_miv_warehouse_consumption(*args, **kwargs)
+
+    def find_nlp_similarity_matches(self, *args, **kwargs):
+        return self.item_matching_service.find_nlp_similarity_matches(*args, **kwargs)

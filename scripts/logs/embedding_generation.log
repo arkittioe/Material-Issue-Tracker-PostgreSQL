@@ -1,0 +1,4 @@
+2025-10-16 16:09:18,516 - INFO - 🔄 در حال بارگذاری مدل paraphrase-multilingual-MiniLM-L12-v2...
+2025-10-16 16:09:18,516 - INFO - Load pretrained SentenceTransformer: paraphrase-multilingual-MiniLM-L12-v2
+2025-10-16 16:13:51,400 - WARNING - '(ReadTimeoutError("HTTPSConnectionPool(host='huggingface.co', port=443): Read timed out. (read timeout=10)"), '(Request ID: 397239da-958b-4b5a-9c17-d4b88148039a)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/86741b4e3f5cb7765a600d3a3d55a0f6a6cb443d/onnx/model_qint8_avx512.onnx
+2025-10-16 16:13:51,402 - ERROR - ❌ خطای بحرانی در اجرای اسکریپت: Connection error, and we cannot find the requested files in the cached path. Please try again or make sure your Internet connection is on.

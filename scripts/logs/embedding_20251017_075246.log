@@ -1,0 +1,50 @@
+2025-10-17 07:52:46,960 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:52:46,960 | INFO     | EmbeddingGenerator | INVENTORY EMBEDDING GENERATOR v4.0
+2025-10-17 07:52:46,960 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:52:46,960 | INFO     | EmbeddingGenerator | Date: 2025-10-17 07:52:46
+2025-10-17 07:52:46,960 | INFO     | EmbeddingGenerator | Model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2025-10-17 07:52:46,960 | INFO     | EmbeddingGenerator | Embedding dimension: 384
+2025-10-17 07:52:46,961 | INFO     | EmbeddingGenerator | Batch size: 50
+2025-10-17 07:52:46,961 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:52:46,961 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:52:46,961 | INFO     | EmbeddingGenerator | EMBEDDING GENERATOR INITIALIZATION
+2025-10-17 07:52:46,961 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:52:46,961 | INFO     | EmbeddingGenerator | Loading model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2025-10-17 07:52:46,961 | INFO     | EmbeddingGenerator | This may take a few minutes on first run...
+2025-10-17 07:52:46,961 | INFO     | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2025-10-17 07:52:48,546 | INFO     | sentence_transformers.SentenceTransformer | Use pytorch device: cpu
+2025-10-17 07:52:49,867 | INFO     | EmbeddingGenerator | ✅ Model loaded successfully (dimension: 384)
+2025-10-17 07:52:49,867 | INFO     | EmbeddingGenerator | Connecting to database: 192.168.2.37:5432/miv_db
+2025-10-17 07:52:49,986 | INFO     | EmbeddingGenerator | ✅ Connected to: PostgreSQL PostgreSQL 17.6 on x...
+2025-10-17 07:52:49,989 | INFO     | EmbeddingGenerator | 📊 Database status:
+2025-10-17 07:52:49,989 | INFO     | EmbeddingGenerator |    Total items: 2,486
+2025-10-17 07:52:49,989 | INFO     | EmbeddingGenerator |    Items with embeddings: 8
+2025-10-17 07:52:49,989 | INFO     | EmbeddingGenerator |    Coverage: 0.3%
+2025-10-17 07:52:49,989 | INFO     | EmbeddingGenerator | ✅ Initialization completed successfully
+2025-10-17 07:52:49,990 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:52:49,990 | INFO     | EmbeddingGenerator | Starting embedding generation...
+2025-10-17 07:52:49,990 | INFO     | EmbeddingGenerator | Options:
+2025-10-17 07:52:49,990 | INFO     | EmbeddingGenerator |   - Force regenerate all: False
+2025-10-17 07:52:49,990 | INFO     | EmbeddingGenerator |   - Include empty items: False
+2025-10-17 07:52:49,990 | INFO     | EmbeddingGenerator |   - Verify after generation: False
+2025-10-17 07:52:49,990 | INFO     | EmbeddingGenerator | 
+2025-10-17 07:52:50,079 | ERROR    | EmbeddingGenerator | Critical error during embedding generation: (psycopg2.errors.UndefinedFunction) operator does not exist: json = unknown
+LINE 3: ...ector IS NULL OR inventory_items.embedding_vector = NULL) AN...
+                                                             ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: SELECT inventory_items.id AS inventory_items_id, inventory_items.warehouse_id AS inventory_items_warehouse_id, inventory_items.item_code AS inventory_items_item_code, inventory_items.warehouse_item_number AS inventory_items_warehouse_item_number, inventory_items.type AS inventory_items_type, inventory_items.description AS inventory_items_description, inventory_items.size AS inventory_items_size, inventory_items.physical_qty AS inventory_items_physical_qty, inventory_items.reserved_qty AS inventory_items_reserved_qty, inventory_items.available_qty AS inventory_items_available_qty, inventory_items.unit AS inventory_items_unit, inventory_items.unit_price AS inventory_items_unit_price, inventory_items.total_value AS inventory_items_total_value, inventory_items.min_stock_level AS inventory_items_min_stock_level, inventory_items.max_stock_level AS inventory_items_max_stock_level, inventory_items.reorder_point AS inventory_items_reorder_point, inventory_items.last_receipt_date AS inventory_items_last_receipt_date, inventory_items.last_issue_date AS inventory_items_last_issue_date, inventory_items.created_at AS inventory_items_created_at, inventory_items.updated_at AS inventory_items_updated_at, inventory_items.embedding_vector AS inventory_items_embedding_vector, inventory_items.embedding_text AS inventory_items_embedding_text, inventory_items.embedding_updated_at AS inventory_items_embedding_updated_at 
+FROM inventory_items 
+WHERE (inventory_items.embedding_vector IS NULL OR inventory_items.embedding_vector = NULL) AND inventory_items.available_qty > %(available_qty_1)s]
+[parameters: {'available_qty_1': 0}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-10-17 07:52:50,214 | ERROR    | EmbeddingGenerator | ❌ Fatal error: (psycopg2.errors.UndefinedFunction) operator does not exist: json = unknown
+LINE 3: ...ector IS NULL OR inventory_items.embedding_vector = NULL) AN...
+                                                             ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: SELECT inventory_items.id AS inventory_items_id, inventory_items.warehouse_id AS inventory_items_warehouse_id, inventory_items.item_code AS inventory_items_item_code, inventory_items.warehouse_item_number AS inventory_items_warehouse_item_number, inventory_items.type AS inventory_items_type, inventory_items.description AS inventory_items_description, inventory_items.size AS inventory_items_size, inventory_items.physical_qty AS inventory_items_physical_qty, inventory_items.reserved_qty AS inventory_items_reserved_qty, inventory_items.available_qty AS inventory_items_available_qty, inventory_items.unit AS inventory_items_unit, inventory_items.unit_price AS inventory_items_unit_price, inventory_items.total_value AS inventory_items_total_value, inventory_items.min_stock_level AS inventory_items_min_stock_level, inventory_items.max_stock_level AS inventory_items_max_stock_level, inventory_items.reorder_point AS inventory_items_reorder_point, inventory_items.last_receipt_date AS inventory_items_last_receipt_date, inventory_items.last_issue_date AS inventory_items_last_issue_date, inventory_items.created_at AS inventory_items_created_at, inventory_items.updated_at AS inventory_items_updated_at, inventory_items.embedding_vector AS inventory_items_embedding_vector, inventory_items.embedding_text AS inventory_items_embedding_text, inventory_items.embedding_updated_at AS inventory_items_embedding_updated_at 
+FROM inventory_items 
+WHERE (inventory_items.embedding_vector IS NULL OR inventory_items.embedding_vector = NULL) AND inventory_items.available_qty > %(available_qty_1)s]
+[parameters: {'available_qty_1': 0}]
+(Background on this error at: https://sqlalche.me/e/20/f405)

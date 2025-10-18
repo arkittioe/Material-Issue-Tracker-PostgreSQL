@@ -1,0 +1,50 @@
+2025-10-17 07:59:22,053 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:59:22,054 | INFO     | EmbeddingGenerator | INVENTORY EMBEDDING GENERATOR v4.0
+2025-10-17 07:59:22,054 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:59:22,054 | INFO     | EmbeddingGenerator | Date: 2025-10-17 07:59:22
+2025-10-17 07:59:22,054 | INFO     | EmbeddingGenerator | Model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2025-10-17 07:59:22,054 | INFO     | EmbeddingGenerator | Embedding dimension: 384
+2025-10-17 07:59:22,054 | INFO     | EmbeddingGenerator | Batch size: 50
+2025-10-17 07:59:22,054 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:59:22,054 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:59:22,054 | INFO     | EmbeddingGenerator | EMBEDDING GENERATOR INITIALIZATION
+2025-10-17 07:59:22,054 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:59:22,054 | INFO     | EmbeddingGenerator | Loading model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2025-10-17 07:59:22,054 | INFO     | EmbeddingGenerator | This may take a few minutes on first run...
+2025-10-17 07:59:22,055 | INFO     | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2025-10-17 07:59:23,495 | INFO     | sentence_transformers.SentenceTransformer | Use pytorch device: cpu
+2025-10-17 07:59:24,883 | INFO     | EmbeddingGenerator | ✅ Model loaded successfully (dimension: 384)
+2025-10-17 07:59:24,884 | INFO     | EmbeddingGenerator | Connecting to database: 192.168.2.37:5432/miv_db
+2025-10-17 07:59:25,065 | INFO     | EmbeddingGenerator | ✅ Connected to: PostgreSQL PostgreSQL 17.6 on x...
+2025-10-17 07:59:25,068 | INFO     | EmbeddingGenerator | 📊 Database status:
+2025-10-17 07:59:25,068 | INFO     | EmbeddingGenerator |    Total items: 2,486
+2025-10-17 07:59:25,068 | INFO     | EmbeddingGenerator |    Items with embeddings: 508
+2025-10-17 07:59:25,068 | INFO     | EmbeddingGenerator |    Coverage: 20.4%
+2025-10-17 07:59:25,068 | INFO     | EmbeddingGenerator | ✅ Initialization completed successfully
+2025-10-17 07:59:25,068 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 07:59:25,068 | INFO     | EmbeddingGenerator | Starting embedding generation...
+2025-10-17 07:59:25,068 | INFO     | EmbeddingGenerator | Options:
+2025-10-17 07:59:25,069 | INFO     | EmbeddingGenerator |   - Force regenerate all: False
+2025-10-17 07:59:25,069 | INFO     | EmbeddingGenerator |   - Include empty items: False
+2025-10-17 07:59:25,069 | INFO     | EmbeddingGenerator |   - Verify after generation: False
+2025-10-17 07:59:25,069 | INFO     | EmbeddingGenerator | 
+2025-10-17 07:59:25,152 | INFO     | EmbeddingGenerator | 📊 Found 1,978 items to process
+2025-10-17 07:59:35,738 | INFO     | EmbeddingGenerator | Progress: 25.3% | Processed: 500 | Successful: 500 | Failed: 0 | Skipped: 0
+2025-10-17 07:59:48,014 | INFO     | EmbeddingGenerator | Progress: 50.6% | Processed: 1,000 | Successful: 1,000 | Failed: 0 | Skipped: 0
+2025-10-17 07:59:58,426 | INFO     | EmbeddingGenerator | Progress: 75.8% | Processed: 1,500 | Successful: 1,500 | Failed: 0 | Skipped: 0
+2025-10-17 08:00:07,498 | INFO     | EmbeddingGenerator | Progress: 100.0% | Processed: 1,978 | Successful: 1,978 | Failed: 0 | Skipped: 0
+2025-10-17 08:00:07,501 | INFO     | EmbeddingGenerator | 
+======================================================================
+2025-10-17 08:00:07,501 | INFO     | EmbeddingGenerator | SUMMARY
+2025-10-17 08:00:07,501 | INFO     | EmbeddingGenerator | ======================================================================
+2025-10-17 08:00:07,501 | INFO     | EmbeddingGenerator | ⏱️  Duration: 0:00:42.428705
+2025-10-17 08:00:07,501 | INFO     | EmbeddingGenerator | 📊 Statistics:
+2025-10-17 08:00:07,501 | INFO     | EmbeddingGenerator |    Total items in database: 2,486
+2025-10-17 08:00:07,501 | INFO     | EmbeddingGenerator |    Items to process: 1,978
+2025-10-17 08:00:07,501 | INFO     | EmbeddingGenerator |    Successfully processed: 1,978
+2025-10-17 08:00:07,501 | INFO     | EmbeddingGenerator |    Failed: 0
+2025-10-17 08:00:07,502 | INFO     | EmbeddingGenerator |    Skipped (no text): 0
+2025-10-17 08:00:07,502 | INFO     | EmbeddingGenerator |    Already embedded: 0
+2025-10-17 08:00:07,502 | INFO     | EmbeddingGenerator |    Success rate: 100.0%
+2025-10-17 08:00:07,502 | INFO     | EmbeddingGenerator | 📄 Report saved to: logs\report_20251017_080007.json
+2025-10-17 08:00:07,503 | INFO     | EmbeddingGenerator | Database connections closed
